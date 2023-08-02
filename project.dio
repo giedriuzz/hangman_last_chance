@@ -398,7 +398,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="htCmK6miZT2Sm3a6Cl4b" name="Code">
-        <mxGraphModel dx="822" dy="947" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="525" dy="756" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -441,7 +441,7 @@
                 <mxCell id="tdaf4XD1Wxgf91JWzoz6-24" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#f50a0a;" parent="1" source="tdaf4XD1Wxgf91JWzoz6-4" target="tdaf4XD1Wxgf91JWzoz6-6" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="tdaf4XD1Wxgf91JWzoz6-4" value="Make list with geted word lengt" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="tdaf4XD1Wxgf91JWzoz6-4" value="Make list with geted word lenght" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="80" y="410" width="140" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="tdaf4XD1Wxgf91JWzoz6-5" value="+ leter: str" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="1" vertex="1">
@@ -514,7 +514,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="wCuOE3KrLVZOW3fibx8L" name="Page-4">
-        <mxGraphModel dx="822" dy="947" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="525" dy="947" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
