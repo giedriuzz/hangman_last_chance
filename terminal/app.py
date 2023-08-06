@@ -1,4 +1,7 @@
+"""Main game script"""
+
 from word import Word
+from validation import input_only_string
 
 word = Word("Hello")
 
@@ -8,8 +11,8 @@ length = 10
 while 0 < length:
     length -= 1
     print(f"used letter: {word.not_guessed_letters_list}")
-    letter = input("input one letter: ")
-    if word.length_of_word() == 1:
+    letter = input_only_string("Guess a letter: ")
+    if len(letter) == 1:
         if word.is_letter_in_word(letter=letter) is True:
             print(*word.replace_guessed_letter(letter=letter))
 
@@ -25,5 +28,7 @@ while 0 < length:
     else:
         if word.is_guessed_word_equal(letter) is True:
             print("You guessed the word !!!")
-        if word.is_word_guessed() is False:
+            break
+        if word.is_guessed_word_equal(letter) is False:
             print("You hanged !!!")
+            break

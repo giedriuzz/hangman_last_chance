@@ -73,6 +73,6 @@ hangman = [
 if __name__ == "__main__":
     pass
 
-# for i in hangman:
-#     print(colored(i, "red", attrs=["blink"]))
-#     time.sleep(1)
+for i in hangman:
+    print(colored(i, "red", attrs=["blink"]))
+    time.sleep(1)
