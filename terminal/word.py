@@ -24,6 +24,7 @@ class Word(Abstract):
     """class for work with get words from database"""
 
     not_guessed_letters_list: List[str] = []
+    guessed_letters_list: List[str] = []
 
     def __init__(self, word: str):
         self.word: str = word.upper()
@@ -33,12 +34,19 @@ class Word(Abstract):
         """Return the number of letters in the given word"""
         return len(self.word)
 
+    def is_word_guessed(self) -> str:
+        """Return guessed word for write to db"""
+        alpha = "".join(self.empty_word_list)
+        return alpha.isalpha()
+
     def is_letter_in_word(self, letter: str) -> Optional[bool]:
         """Check if a letter is in the word"""
-        if letter.upper() in self.word:
+        letter_upper = letter.upper()
+        if letter_upper in self.word:
+            self.guessed_letters_list.append(letter_upper)
             return True
-        if letter.upper() not in self.word:
-            self.not_guessed_letters_list.append(letter.upper())
+        if letter_upper not in self.word:
+            self.not_guessed_letters_list.append(letter_upper)
             return False
         return letter
 
@@ -48,6 +56,27 @@ class Word(Abstract):
             return True
         return False
 
+    def is_letter_in_not_guessed_list(self, letter: str) -> str:
+        """Check is a letter is in not guessed letters list"""
+        if self.not_guessed_letters_list.count(letter.upper()) >= 2:
+            return False
+        return True
+
+    def is_letter_used(self, letter: str) -> bool:
+        """Check is a letter is used"""
+        letter_upper = letter.upper()
+        if letter_upper in self.not_guessed_letters_list:
+            return False
+        if letter_upper in self.guessed_letters_list:
+            return False
+        return True
+
+    def is_letter_in_guessed_list(self, letter: str) -> str:
+        """Check is a letter is in guessed letters list"""
+        if self.guessed_letters_list.count(letter.upper()) >= 2:
+            return False
+        return True
+
     def replace_guessed_letter(self, letter: str) -> list:
         """Replace a letter if it is in the word"""
         for get_letter in enumerate(self.word):
@@ -55,11 +84,6 @@ class Word(Abstract):
                 self.empty_word_list[get_letter[0]] = letter.upper()
             continue
         return self.empty_word_list
-
-    def is_word_guessed(self) -> str:
-        """Return guessed word for write to db"""
-        alpha = "".join(self.empty_word_list)
-        return alpha.isalpha()
 
 
 if __name__ == "__main__":

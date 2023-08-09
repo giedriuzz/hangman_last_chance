@@ -8,5 +8,4 @@ def input_only_string(input_text: str) -> str:
         string = input(input_text)
         if string.replace(" ", "").isalpha() is True:
             return string
-        else:
-            print("Input must to be a string !")
+        print("Input must to be a string !")

@@ -11,8 +11,8 @@ Scaled Down Task (maximum score : 8):
 
 https://www.youtube.com/watch?v=leW9ZotUVYo
 
-- [x] Maximum guess attempts: 10.
-- [x] Ability to guess a word or a letter. If a guess is incorrect, user loses 1 life.
+- [] Maximum guess attempts: 10.
+- [] Ability to guess a word or a letter. If a guess is incorrect, user loses 1 life.
 - If user has 0 guesses (lifes) left, game is lost.
 
 2. Project of your choice that fulfills below mentioned requirements.
