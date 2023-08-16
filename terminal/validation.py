@@ -1,13 +1,15 @@
 """Module for validating inputs"""
+from word import Word
 
 
-def input_only_string(input_text: str) -> str:
+def input_only_letter(input_text: str) -> str:
     """Validate input is a input_text
     input_text: what text want to see in input line"""
     while True:
         string = input(input_text)
         if string.replace(" ", "").isalpha() is True:
             return string
+        Word.not_guessed_letters_list.append(string)
         print("Input must to be a string !")
 
 

@@ -3,7 +3,7 @@ import time
 import sys
 from termcolor import colored, cprint
 from word import Word
-from validation import input_only_string, input_only_integer_value_not_bigger
+from validation import input_only_letter, input_only_integer_value_not_bigger
 from hangman import hangman
 
 word = Word("Hello")
@@ -30,7 +30,7 @@ if CHOOSING == 1:
     while 0 < LENGTH:
         LENGTH -= 1
         not_guessed_letters = word.not_guessed_letters_list
-        letter = input_only_string(colored("Guess a letter or all word: ", "yellow"))
+        letter = input_only_letter(colored("Guess a letter or all word: ", "yellow"))
         hanged = colored(hangman[7], "red")
         if word.is_letter_used(letter) is True:
             if len(letter) == 1:
@@ -47,7 +47,7 @@ if CHOOSING == 1:
                     print(f"You have {LENGTH} guesses left")
                 else:
                     letter_index = not_guessed_letters.index(letter.upper())
-                    if letter_index <= 7:
+                    if letter_index <= 6:
                         print(colored(_SAY_DONT_GUESSED, "light_red"))
                         print(f"You have {colored(LENGTH, 'red')} guesses left.")
                         print(hangman[letter_index])

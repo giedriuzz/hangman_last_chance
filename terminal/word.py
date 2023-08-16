@@ -8,15 +8,15 @@ class Abstract(ABC):
     """class for work with get words from database"""
 
     @abstractmethod
-    def length_of_word(self):
+    def length_of_word(self) -> int:
         """class for work with get words from database"""
 
     @abstractmethod
-    def is_letter_in_word(self, letter):
+    def is_word_guessed(self) -> bool:
         """Check if a letter is in word"""
 
     @abstractmethod
-    def is_guessed_word_equal(self, word):
+    def is_guessed_word_equal(self) -> bool:
         """Check if a word is equal to a guess"""
 
 
@@ -27,7 +27,7 @@ class Word(Abstract):
     guessed_letters_list: List[str] = []
 
     def __init__(self, word: str):
-        self.word: str = word.upper()
+        self.word = word.upper()
         self.empty_word_list = ["_" for _ in range(len(self.word))]
 
     def length_of_word(self) -> int:
@@ -39,20 +39,9 @@ class Word(Abstract):
         alpha = "".join(self.empty_word_list)
         return alpha.isalpha()
 
-    def is_letter_in_word(self, letter: str) -> Optional[bool]:
-        """Check if a letter is in the word"""
-        letter_upper = letter.upper()
-        if letter_upper in self.word:
-            self.guessed_letters_list.append(letter_upper)
-            return True
-        if letter_upper not in self.word:
-            self.not_guessed_letters_list.append(letter_upper)
-            return False
-        return letter
-
-    def is_guessed_word_equal(self, word) -> bool:
+    def is_guessed_word_equal(self) -> bool:
         """Check if a word is equal to a guess"""
-        if word.upper() == self.word:
+        if self.word.upper() == self.word:
             return True
         return False
 
@@ -86,5 +75,56 @@ class Word(Abstract):
         return self.empty_word_list
 
 
+class Letter(Word):
+    """Class for work with letters"""
+
+    LETTERS_LIST = [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+    ]
+
+    def __init__(self, word: str, letter: str):
+        super().__init__(word)
+        self.letter = letter
+
+    def is_letter_in_word(self) -> Optional[bool]:
+        """Check if a letter is in the word"""
+
+        if self.letter in self.word:
+            self.guessed_letters_list.append(self.letter)
+            return True
+        if self.letter not in self.word:
+            self.not_guessed_letters_list.append(self.letter)
+            return False
+        return self.letter
+
+
 if __name__ == "__main__":
-    pass
+    words = Word("Hello")
+    letters = Letter("Hello", "G")
+    print(words.length_of_word())
+    print(letters.is_letter_in_word())
