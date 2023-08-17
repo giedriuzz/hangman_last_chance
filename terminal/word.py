@@ -45,35 +45,6 @@ class Word(Abstract):
             return True
         return False
 
-    def is_letter_in_not_guessed_list(self, letter: str) -> str:
-        """Check is a letter is in not guessed letters list"""
-        if self.not_guessed_letters_list.count(letter.upper()) >= 2:
-            return False
-        return True
-
-    def is_letter_used(self, letter: str) -> bool:
-        """Check is a letter is used"""
-        letter_upper = letter.upper()
-        if letter_upper in self.not_guessed_letters_list:
-            return False
-        if letter_upper in self.guessed_letters_list:
-            return False
-        return True
-
-    def is_letter_in_guessed_list(self, letter: str) -> str:
-        """Check is a letter is in guessed letters list"""
-        if self.guessed_letters_list.count(letter.upper()) >= 2:
-            return False
-        return True
-
-    def replace_guessed_letter(self, letter: str) -> list:
-        """Replace a letter if it is in the word"""
-        for get_letter in enumerate(self.word):
-            if get_letter[1] == letter.upper():
-                self.empty_word_list[get_letter[0]] = letter.upper()
-            continue
-        return self.empty_word_list
-
 
 class Letter(Word):
     """Class for work with letters"""
@@ -105,11 +76,13 @@ class Letter(Word):
         "X",
         "Y",
         "Z",
+        " ",
     ]
+    USED_LETTERS = []
 
-    def __init__(self, word: str, letter: str):
+    def __init__(self, word: str = "", letter: str = " "):
         super().__init__(word)
-        self.letter = letter
+        self.letter = letter.upper()
 
     def is_letter_in_word(self) -> Optional[bool]:
         """Check if a letter is in the word"""
@@ -122,9 +95,53 @@ class Letter(Word):
             return False
         return self.letter
 
+    def is_letter_in_not_guessed_list(
+        self,
+    ) -> str:
+        """Check is a letter is in not guessed letters list"""
+        if self.not_guessed_letters_list.count(self.letter.upper()) >= 2:
+            return False
+        return True
+
+    def is_letter_used(self) -> bool:
+        """Check is a letter is used"""
+        letter_upper = self.letter.upper()
+        if letter_upper in self.not_guessed_letters_list:
+            return False
+        if letter_upper in self.guessed_letters_list:
+            return False
+        return True
+
+    def is_letter_in_letters_list(self) -> str:
+        """Check is a letter in LETTERS_LIST"""
+        if self.LETTERS_LIST is True:
+            return True
+        return False
+
+    def replace_guessed_letter(self) -> list:
+        """Replace a letter if it is in the word"""
+        for get_letter in enumerate(self.word):
+            if get_letter[1] == self.letter.upper():
+                self.empty_word_list[get_letter[0]] = self.letter.upper()
+            continue
+        return self.empty_word_list
+
+    def remove_used_letter_from_list(self) -> list:
+        """Remove used letter from list"""
+        self.LETTERS_LIST.remove(self.letter)
+        return self.LETTERS_LIST
+
 
 if __name__ == "__main__":
-    words = Word("Hello")
-    letters = Letter("Hello", "G")
+    word_new = "Hello"
+    words = Word(word_new)
+    print(*Letter().LETTERS_LIST)
+    LETT = input("input letter: ")
+    letters = Letter(word_new, LETT)
+
     print(words.length_of_word())
     print(letters.is_letter_in_word())
+
+    print("\n", "--------------------------------")
+    print(*letters.remove_used_letter_from_list())
+    print(letters.is_letter_in_guessed_list())

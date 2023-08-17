@@ -1,7 +1,16 @@
 
-
-Spėjama įrašant raides:\
-- jei raidė 'String' tikrinama ar yra žodyje\
+# Žaidimas vyksta spėjant 10 žodžių
+## Žaidimo logika
+[x] Spausdinamas sveikinimas.\
+[x] Spausdinamas pasirinkimo meniu.\
+[x] Kelintas žodis iš kelių liko.\
+[x] Visa abėcėlė.\
+[x] Tuščias žodis.\
+[x] Prašoma spėti raidę arba žodį
+### Spėjama įrašant raides
+- [x] TIKRINAMA ar įvesta raidė yra ne skaičius, ne ženklas, ne LT raidė: 
+- TIKRINAMA ar įvesta daugiau nei viena raidė.
+    - jei raidė 'String' tikrinama ar yra žodyje\
     - jei raidė yra žodyje\
         - spausdinama 'You guessed a letter !'
         - tikrinama ar tai ne paskutinė atspėta raidė.
@@ -31,6 +40,7 @@ Spėjama įrašant raides:\
         - žodis atspėtas spausdinamas žodis ir sveikinimas, užklausiama ar žaidžiama toliau.
             - jei žaidžiama toliau tai atsitiktine tvarka žodis ištraukiamas iš DB, žaidimas tęsiasi.
         - žodis neatspėtas, spausdinamas pakaruoklis, klausiama ar spėjamas kitas žodis.
+
 
 
 
