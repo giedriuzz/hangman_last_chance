@@ -1,31 +1,17 @@
 """Module for validating inputs"""
-from termcolor import colored
 
 
 def input_only_en_letters(input_text: str) -> str:
-    """Validate input is a input_text
+    """Validate input is it only letters from English alphabetš
     input_text: what text want to see in input line"""
-
     lt_letters_list = ["Ą", "Č", "Ę", "Ė", "Į", "Š", "Ų", "Ū", "Ž"]
     while True:
         string = input(input_text).upper()
-        if len(string) == 1:
-            if (
-                string not in lt_letters_list
-                and string.replace(" ", "").isalpha() is True
-            ):
+        if string.isalpha() is True:
+            filtered = filter(lambda letter: letter in string, lt_letters_list)
+            if len(list(filtered)) == 0:
                 return string
-            print("Input must to be a string or only English alphabet letter !")
-        else:
-            for _ in range(len(string)):
-                for letter in string:
-                    if letter in lt_letters_list:
-                        print(
-                            f'Letter {colored(letter, "red")} in word must to be from English alphabetic letter'
-                        )
-                    continue
-                return string
-        # Word.not_guessed_letters_list.append(string) # FIXME #? ar reikia tos eilutės
+        print("Input except only English alphabetic letters!")
 
 
 def input_only_integer_value_not_bigger(value_size: int, input_text: str) -> str:
