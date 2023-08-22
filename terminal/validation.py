@@ -1,8 +1,9 @@
 """Module for validating inputs"""
 
 
+# * perkelta į word.py
 def input_only_en_letters(input_text: str) -> str:
-    """Validate input is it only letters from English alphabetš
+    """Validate input is it only letters from English alphabet
     input_text: what text want to see in input line"""
     lt_letters_list = ["Ą", "Č", "Ę", "Ė", "Į", "Š", "Ų", "Ū", "Ž"]
     while True:
@@ -11,7 +12,8 @@ def input_only_en_letters(input_text: str) -> str:
             filtered = filter(lambda letter: letter in string, lt_letters_list)
             if len(list(filtered)) == 0:
                 return string
-        print("Input except only English alphabetic letters!")
+        print("Input accepts only English alphabetic letters!")
+        continue
 
 
 def input_only_integer_value_not_bigger(value_size: int, input_text: str) -> str:

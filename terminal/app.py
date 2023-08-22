@@ -1,14 +1,14 @@
 """Main game script"""
 
 import sys
-from termcolor import colored
+from termcolor import colored, cprint
 from word import Word, Letter
-from validation import input_only_en_letters, input_only_integer_value_not_bigger
+from validation import input_only_integer_value_not_bigger
 from hangman import hangman
 
 
 greeting = colored(
-    " === Welcome to Hangman game! ===", "white", "on_light_blue", attrs=["bold"]
+    " === Welcome to Hangman game! ===", "red", "on_light_blue", attrs=["bold"]
 )
 print("\n", greeting, "\n")
 
@@ -21,34 +21,71 @@ CHOOSING = int(
 
 def main():
     if CHOOSING == 1:
-        # Game area
-        guessed_word = "Hello"  # Padaryti kad gautų iš DB
-        word = Word(guessed_word)
-        _SAY_DONT_GUESSED = "You don`t guessed a letter :("
-        _SAY_GUESSED_LETTER = "You guessed a letter ! "
-        length = 0
-        while length < 10:
-            length += 1
-            print(f'\n{colored("Round: ", "red")} {length}/10')
-            print("Guess the word: ", *word.empty_word_list)
+        # * Game area
+        _say_guessing_word = colored("Guessing word: ", "blue", attrs=["bold"])
+        _say_dont_guessed = "You don`t guessed a letter :("
+        _say_you_hanged = colored(" You HANGED :( ", "red", "on_red", attrs=["bold"])
+
+        length_one = 0
+        while length_one < 10:  # * Can play 10 rounds
+            length_one += 1
+            guessed_word = "Hello"  # TODO: Pasidaryti kad gautų iš DB
+            word = Word(guessed_word)
+            letter = Letter(guessed_word)
+
+            print(f'\n{colored("Round: ", "red")} {length_one}/10')
+            print(_say_guessing_word, *word.empty_word_list)
+            # stop = word.lenght_of_unique_letters()
             lenght_two = 0
-            while lenght_two < 10:
+            while True:
                 lenght_two += 1
-                string = input_only_en_letters(
+                string = letter.input_only_en_letters(
                     colored("Guess a letter or all word: ", "yellow")
                 )
-                letter = Letter(
-                    string
-                )  # FIXME #! Ar reikia čia tos eilutės DUBLIUOJASI
+                # guesses_left = f"Guesses left:  {colored((10 - lenght_two), 'red')}"
 
                 if len(string) == 1:
-                    if letter.is_letter_in_word() is True:
-                        print(letter.replace_guessed_letter())
-                        continue
+                    # * Kai atspėta raidė
+                    if letter.is_letter_in_word(string) is True:
+                        # print(guesses_left)
+                        print(
+                            colored("Guessing word: ", "blue"),
+                            *letter.replace_guessed_letter(string),
+                        )
+                        if letter.is_word_guessed() is True:
+                            print(colored(" == You guessed the word !!! == ", "yellow"))
+                            break
+                        print(
+                            colored("Letters left: ", "green"),
+                            *letter.remove_used_letter_from_list(string),
+                        )
 
-                    # print("Letters left: ", *letter.remove_used_letter_from_list())
-                    # print(replace_letter)
-                    # break
+                        continue
+                    # * Kai neatspėta raidė
+
+                    if letter.get_hangman(string) == 7:
+                        print(_say_you_hanged)
+                        print(colored(hangman[letter.get_hangman(string)], "red"))
+                        break
+                    print(colored(_say_dont_guessed, "red"))
+                    print(hangman[letter.get_hangman(string)])
+                    # print(guesses_left)
+                    print(
+                        colored("Guessing word: ", "blue"),
+                        *letter.replace_guessed_letter(string),
+                    )
+                    print(
+                        colored("Letters left: ", "green"),
+                        *letter.remove_used_letter_from_list(string),
+                    )
+            print(_say_you_hanged)  # Kai neatspėtas žodis
+            # [ ] atspausdinti hangman
+            # [ ] atspausdinti kiek liko raidžių
+            # [ ] atspausdinti žodį
+
+            # print("Letters left: ", *letter.remove_used_letter_from_list())
+            # print(replace_letter)
+            # break
 
     #     if word.is_letter_used(letter) is True:
     #         if word.is_letter_in_word(letter=letter) is True:

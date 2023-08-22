@@ -1,7 +1,7 @@
 """Module for work with guessing word from database"""
 
-from typing import List, Optional
 from abc import ABC, abstractmethod
+from typing import Union, List
 
 
 class Abstract(ABC):
@@ -12,37 +12,33 @@ class Abstract(ABC):
         """class for work with get words from database"""
 
     @abstractmethod
-    def is_word_guessed(self) -> bool:
-        """Check if a letter is in word"""
+    def lenght_of_unique_letters(self) -> bool:
+        """Check if a word is equal to a guess"""
 
     @abstractmethod
-    def is_guessed_word_equal(self) -> bool:
-        """Check if a word is equal to a guess"""
+    def is_word_guessed(self) -> bool:
+        """Check if a letter is in word"""
 
 
 class Word(Abstract):
     """class for work with get words from database"""
 
-    not_guessed_letters_list: List[str] = []
-    guessed_letters_list: List[str] = []
-
     def __init__(self, word: str):
         self.word = word.upper()
         self.empty_word_list = ["_" for _ in range(len(self.word))]
 
-    def length_of_word(self) -> int:
+    def length_of_word(self) -> int:  # ! kol kas nenaudojama
         """Return the number of letters in the given word"""
         return len(self.word)
 
-    def is_word_guessed(self) -> str:
+    def lenght_of_unique_letters(self) -> int:
+        """Return the number of unique letters in the given word"""
+        return len(set(self.word))
+
+    def is_word_guessed(self) -> bool:
         """Return guessed word for write to db"""
         alpha = "".join(self.empty_word_list)
-        return alpha.isalpha()
-
-    def is_guessed_word_equal(self) -> bool:
-        """Check if a word is equal to a guess"""
-
-        if self.word.upper() == self.word:
+        if alpha.isalpha() is True:
             return True
         return False
 
@@ -77,71 +73,78 @@ class Letter(Word):
         "X",
         "Y",
         "Z",
-        " ",
     ]
-    USED_LETTERS = []
+    MATCHED_LETTERS: List[str] = []
+    NOT_MATCHED_LETTERS: List[str] = []
 
-    def __init__(self, letter: str = " "):
-        super().__init__(letter)
-        self.letter = letter.upper()
+    def input_only_en_letters(self, input_text: str) -> str:
+        """Validate input is it only letters from English alphabet
+        and not use used letters before
+        input_text: what text want to see in input line"""
+        lt_letters_list = ["Ą", "Č", "Ę", "Ė", "Į", "Š", "Ų", "Ū", "Ž"]
+        while True:
+            string = input(input_text).upper()
+            if string.isalpha() is True:
+                if (
+                    string not in self.MATCHED_LETTERS
+                    and string not in self.NOT_MATCHED_LETTERS
+                ):
+                    filtered = filter(lambda letter: letter in string, lt_letters_list)
+                    if len(list(filtered)) == 0:
+                        return string
+                print("You have already used this letter!")
+                continue
+            print("Input accepts only English alphabetic letters!")
+            continue
 
-    def is_letter_in_word(self) -> Optional[bool]:
+    def is_letter_in_word(self, letter: str) -> Union[bool, str]:
         """Check if a letter is in the word"""
-
-        if self.letter in self.word:
-            self.guessed_letters_list.append(self.letter)
+        if letter in self.word:
+            self.MATCHED_LETTERS.append(letter)
             return True
-        if self.letter not in self.word:
-            self.not_guessed_letters_list.append(self.letter)
-            return False
-        return self.letter
-
-    def is_letter_in_not_guessed_list(
-        self,
-    ) -> str:
-        """Check is a letter is in not guessed letters list"""
-        if self.not_guessed_letters_list.count(self.letter.upper()) >= 2:
-            return False
-        return True
-
-    def is_letter_used(self) -> bool:
-        """Check is a letter is used"""
-        letter = self.letter.upper()
-        if letter in self.USED_LETTERS:
+        if letter not in self.word:
+            self.NOT_MATCHED_LETTERS.append(letter)
             return False
         return letter
 
-    def is_letter_in_letters_list(self) -> str:
+    def is_letter_in_not_guessed_list(
+        self, letter: str
+    ) -> bool:  # ! kol kas nenaudojama
+        """Check is a letter is in not guessed letters list"""
+        if self.NOT_MATCHED_LETTERS.count(letter.upper()) >= 2:
+            return False
+        return True
+
+    def is_letter_used(self, letter) -> bool:
+        """Check is a letter is used"""
+        if letter.upper() in self.MATCHED_LETTERS:
+            return False
+        return True
+
+    def is_letter_in_letters_list(self) -> bool:  # ! kol kas nenaudojama
         """Check is a letter in LETTERS_LIST"""
         if self.LETTERS_LIST is True:
             return True
         return False
 
-    def replace_guessed_letter(self) -> list:
+    def replace_guessed_letter(self, letter) -> list:
         """Replace a letter if it is in the word"""
         for get_letter in enumerate(self.word):
-            if get_letter[1] == self.letter.upper():
-                self.USED_LETTERS.append(get_letter[1].upper())
-                self.empty_word_list[get_letter[0]] = self.letter.upper()
+            if get_letter[1] == letter.upper():
+                self.MATCHED_LETTERS.append(get_letter[1].upper())
+                self.empty_word_list[get_letter[0]] = letter.upper()
             continue
         return self.empty_word_list
 
-    def remove_used_letter_from_list(self) -> list:
+    def remove_used_letter_from_list(self, letter) -> list:
         """Remove used letter from list"""
-        self.LETTERS_LIST.remove(self.letter.upper())
+        self.LETTERS_LIST.remove(letter.upper())
         return self.LETTERS_LIST
+
+    def get_hangman(self, letter: str) -> int:
+        """Return hangman picture"""
+        return self.NOT_MATCHED_LETTERS.index(letter.upper())
 
 
 if __name__ == "__main__":
-    word_new = "Hello"
-    words = Word(word_new)
-    print(*Letter().LETTERS_LIST)
-    LETT = input("input letter: ")
-    letters = Letter(LETT)
-
-    print(words.length_of_word())
-    print(letters.is_letter_in_word())
-
-    print("\n", "--------------------------------")
-    print(*letters.remove_used_letter_from_list())
-    print(letters.is_letter_in_guessed_list())
+    pass
