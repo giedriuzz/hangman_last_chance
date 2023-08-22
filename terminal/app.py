@@ -1,7 +1,7 @@
 """Main game script"""
 
 import sys
-from termcolor import colored, cprint
+from termcolor import colored
 from word import Word, Letter
 from validation import input_only_integer_value_not_bigger
 from hangman import hangman
@@ -36,17 +36,17 @@ def main():
             print(f'\n{colored("Round: ", "red")} {length_one}/10')
             print(_say_guessing_word, *word.empty_word_list)
             # stop = word.lenght_of_unique_letters()
-            lenght_two = 0
+
             while True:
-                lenght_two += 1
                 string = letter.input_only_en_letters(
                     colored("Guess a letter or all word: ", "yellow")
                 )
-                # guesses_left = f"Guesses left:  {colored((10 - lenght_two), 'red')}"
 
                 if len(string) == 1:
                     # * Kai atspėta raidė
-                    if letter.is_letter_in_word(string) is True:
+                    if (
+                        letter.is_letter_in_word(string) is True
+                    ):  # TODO: refaktorinti per daug ifu
                         # print(guesses_left)
                         print(
                             colored("Guessing word: ", "blue"),

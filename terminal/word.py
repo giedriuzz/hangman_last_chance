@@ -136,7 +136,7 @@ class Letter(Word):
             continue
         return self.empty_word_list
 
-    def remove_used_letter_from_list(self, letter) -> list:
+    def remove_used_letter_from_list(self, letter) -> List[str]:
         """Remove used letter from list"""
         self.LETTERS_LIST.remove(letter.upper())
         return self.LETTERS_LIST
