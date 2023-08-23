@@ -52,6 +52,8 @@ And just edit you choose category.
 
 To add new `Categories` you must to edit `words.py` file where is in **`words`** folder.  
 
+#### `words.py`
+
 ```python
 words = {
     1: [
@@ -65,7 +67,9 @@ words = {
 ```
 And add new `Category` name in file `app.py`, need change `categories` and `category` variables.  
 
-#### `category = `
+*`app.py`*
+
+- `category = `
 
 ```python
 # category, add new category here
@@ -81,7 +85,7 @@ category = int(
         )
 ```
 
-#### `categories = `
+- `categories = `
 
 ```python
 # categories, add new category here
