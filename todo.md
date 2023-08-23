@@ -11,19 +11,19 @@ Scaled Down Task (maximum score : 8):
 
 https://www.youtube.com/watch?v=leW9ZotUVYo
 
-- [] Maximum guess attempts: 10.
-- [] Ability to guess a word or a letter. If a guess is incorrect, user loses 1 life.
-- If user has 0 guesses (lifes) left, game is lost.
+- [x] Maximum guess attempts: 10.
+- [x] Ability to guess a word or a letter. If a guess is incorrect, user loses 1 life.
+- [x]If user has 0 guesses (lifes) left, game is lost.
 
 2. Project of your choice that fulfills below mentioned requirements.
 
 Requirements:
 
 - [x] Create a new GITHUB project, virtual env, README, .gitignore, etc.
-- Use python functions and/or classes to achieve necessary functionality.
-- Possible words should be held in a list data structure.
-- Use type annotations.
-- Use `print` or logging library to log out information.
+- [x] Use python functions and/or classes to achieve necessary functionality.
+- [x] Possible words should be held in a list data structure.
+- [x] Use type annotations.
+- [x] Use `print` or logging library to log out information.
 
 ## Task (maximum score : 10):
 
@@ -45,7 +45,7 @@ Requirements:
 - Create user registration (name,surname, email).
 - Use Sql and/or NoSql databases to store all necessary data.
 
-  - [] create database and tables with relationships
+- [] create database and tables with relationships
 
 - Use type annotations.
 - Use a logging library to log out information.
