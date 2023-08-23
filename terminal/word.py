@@ -12,7 +12,7 @@ class Abstract(ABC):
         """class for work with get words from database"""
 
     @abstractmethod
-    def lenght_of_unique_letters(self) -> bool:
+    def lenght_of_unique_letters(self) -> int:
         """Check if a word is equal to a guess"""
 
     @abstractmethod
@@ -39,6 +39,12 @@ class Word(Abstract):
         """Return guessed word for write to db"""
         alpha = "".join(self.empty_word_list)
         if alpha.isalpha() is True:
+            return True
+        return False
+
+    def is_word_equal(self, word: str) -> bool:
+        """Check if a word is equal to a guess"""
+        if self.word == word.upper():
             return True
         return False
 
