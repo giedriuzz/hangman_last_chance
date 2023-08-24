@@ -23,7 +23,7 @@ Requirements:
 - [x] Use python functions and/or classes to achieve necessary functionality.
 - [x] Possible words should be held in a list data structure.
 - [x] Use type annotations.
-- [x] Use `print` or logging library to log out information.
+- [] Use `print` or logging library to log out information.
 
 ## Task (maximum score : 10):
 

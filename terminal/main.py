@@ -1,54 +1,23 @@
 """Module for work with guessing word from database"""
 
-from abc import ABC, abstractmethod
-from typing import Union, List
+from dataclasses import dataclass
+from random import choice
+from typing import Dict, List, Union
+
+from termcolor import colored
 
 
-class Abstract(ABC):
-    """class for work with get words from database"""
+@dataclass
+class Words:
+    """Word class"""
 
-    @abstractmethod
-    def lenght_of_unique_letters(self) -> int:
-        """Check if a word is equal to a guess"""
-
-    @abstractmethod
-    def is_word_guessed(self) -> bool:
-        """Check if a letter is in word"""
-
-    @abstractmethod
-    def is_word_equal(self, word: str) -> bool:
-        """Check if a word is equal to a guess"""
+    word: str
 
 
-class Word(Abstract):
-    """class for work with get words from database"""
+class Letter:
+    """Class for work with letters and words"""
 
-    def __init__(self, word: str):
-        self.word = word.upper()
-        self.empty_word_list = ["_" for _ in range(len(self.word))]
-
-    def lenght_of_unique_letters(self) -> int:
-        """Return the number of unique letters in the given word"""
-        return len(set(self.word))
-
-    def is_word_guessed(self) -> bool:
-        """Return guessed word for write to db"""
-        alpha = "".join(self.empty_word_list)
-        if alpha.isalpha() is True:
-            return True
-        return False
-
-    def is_word_equal(self, word: str) -> bool:
-        """Check if a word is equal to a guess"""
-        if self.word == word.upper():
-            return True
-        return False
-
-
-class Letter(Word):
-    """Class for work with letters"""
-
-    LETTERS_LIST = [
+    LETTERS_LIST_TUPLE = (
         "A",
         "B",
         "C",
@@ -75,64 +44,125 @@ class Letter(Word):
         "X",
         "Y",
         "Z",
-    ]
+    )
 
     MATCHED_LETTERS: List[str] = []
     NOT_MATCHED_LETTERS: List[str] = []
+    LETTERS_LIST: List[str] = []
+    empty_word_list: List[str] = []
 
-    def input_only_en_letters(self, input_text: str) -> str:
-        """Validate input is it only letters from English alphabet
-        and not use used letters before
-        input_text: what text want to see in input line"""
-        lt_letters_list = ["Ą", "Č", "Ę", "Ė", "Į", "Š", "Ų", "Ū", "Ž"]
-        while True:
-            string = input(input_text).upper()
-            if string.isalpha() is True:
-                if (
-                    string not in self.MATCHED_LETTERS
-                    and string not in self.NOT_MATCHED_LETTERS
-                ):
-                    filtered = filter(lambda letter: letter in string, lt_letters_list)
-                    if len(list(filtered)) == 0:
-                        return string
-                print("You have already used this letter!")
-                continue
-            print("Input accepts only English alphabetic letters!")
-            continue
+    def __init__(self, word: Words, letter: str = ""):
+        self.word = word.word
+        self.letter = letter
 
-    def is_letter_in_word(self, letter: str) -> Union[bool, str]:
-        """Check if a letter is in the word"""
-        if letter in self.word:
-            self.MATCHED_LETTERS.append(letter)
+    def create_empty_word_list(self) -> None:
+        """Create empty word list"""
+        if len(self.empty_word_list) == 0:
+            for _ in range(len(self.word)):
+                self.empty_word_list.append("_")
+
+    def reload_letters_list(self) -> None:
+        """Reload list of letters"""
+        for letter in self.LETTERS_LIST_TUPLE:
+            self.LETTERS_LIST.append(letter)
+
+    def inspect_letters(self) -> bool:
+        """Inspect is not used letters before"""
+
+        if (
+            self.letter not in self.MATCHED_LETTERS
+            and self.letter not in self.NOT_MATCHED_LETTERS
+        ):
             return True
-        if letter not in self.word:
-            self.NOT_MATCHED_LETTERS.append(letter)
-            return False
-        return letter
+        print("You have already used this letter!")
+        return False
 
-    def is_letter_used(self, letter) -> bool:
+    def is_letter_in_word(self) -> Union[bool, str]:
+        """Check if a letter is in the word"""
+        if self.letter in self.word:
+            self.MATCHED_LETTERS.append(self.letter)
+            return True
+        if self.letter not in self.word:
+            self.NOT_MATCHED_LETTERS.append(self.letter)
+            return False
+        return self.letter
+
+    def is_letter_used(self, letter: str) -> bool:
         """Check is a letter is used"""
         if letter.upper() in self.MATCHED_LETTERS:
             return False
         return True
 
-    def replace_guessed_letter(self, letter) -> list:
+    def replace_guessed_letter(self) -> list:
         """Replace a letter if it is in the word"""
+
         for get_letter in enumerate(self.word):
-            if get_letter[1] == letter.upper():
+            if get_letter[1] == self.letter.upper():
                 self.MATCHED_LETTERS.append(get_letter[1].upper())
-                self.empty_word_list[get_letter[0]] = letter.upper()
+                self.empty_word_list[get_letter[0]] = self.letter.upper()
             continue
         return self.empty_word_list
 
-    def remove_used_letter_from_list(self, letter) -> List[str]:
+    def remove_used_letter_from_list(self) -> List[str]:
         """Remove used letter from list"""
-        self.LETTERS_LIST.remove(letter.upper())
+        self.LETTERS_LIST.remove(self.letter.upper())
         return self.LETTERS_LIST
 
-    def get_hangman(self, letter: str) -> int:
+    def get_hangman(self) -> int:
         """Return hangman picture"""
-        return self.NOT_MATCHED_LETTERS.index(letter.upper())
+        return self.NOT_MATCHED_LETTERS.index(self.letter.upper())
+
+    def is_word_guessed(self) -> bool:
+        """Return guessed word for write to db"""
+        alpha = "".join(self.empty_word_list)
+        if alpha.isalpha() is True:
+            return True
+        return False
+
+    def is_word_equal(self, word: str) -> bool:
+        """Check if a word is equal to a guess"""
+        if self.word == word.upper():
+            return True
+        return False
+
+
+class Categories:
+    """Class for work with categories"""
+
+    def __init__(self, word_dict: dict):
+        self.word_dict = word_dict
+
+    def get_categories_enumerated(self) -> Dict[int, str]:
+        """Get categories enumerated"""
+        categories_dict = {}
+        for category in enumerate(self.word_dict, 1):
+            categories_dict.update({category[0]: category[1]})
+        return categories_dict
+
+    def print_categories(self, categories_dict: dict) -> str:
+        """Print categories"""
+        colors = [
+            "red",
+            "green",
+            "yellow",
+            "blue",
+            "magenta",
+            "cyan",
+            "white",
+            "light_red",
+            "light_green",
+            "light_yellow",
+            "light_blue",
+            "light_magenta",
+            "light_cyan",
+        ]
+        for category_key, category_value in categories_dict.items():
+            random_color = choice(colors)
+            print(
+                f"{colored(category_key, random_color)}."
+                f"{colored(category_value, random_color)}"
+            )
+        return colored("Choose a category: ", "green")
 
 
 if __name__ == "__main__":

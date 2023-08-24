@@ -2,7 +2,7 @@
 
 
 words = {
-    1: [
+    "Countries": [
         "AFGHANISTAN",
         "ALBANIA",
         "ALGERIA",
@@ -28,7 +28,7 @@ words = {
         "BHUTAN",
         "MALDIVES",
     ],
-    2: [
+    "Animals": [
         "BABOON",
         "BADGER",
         "BAT",
@@ -90,7 +90,7 @@ words = {
         "WOMBAT",
         "ZEBRA",
     ],
-    3: [
+    "Fruits": [
         "BANANA",
         "APPLE",
         "MANGO",
@@ -124,11 +124,3 @@ words = {
         "WATERMELON",
     ],
 }
-
-
-def get_categories_enumerated(categories: dict):
-    for cat in enumerate(categories, 1):
-        print(cat)
-    
-        
-get_categories_enumerated(categories=words)

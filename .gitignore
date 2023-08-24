@@ -161,4 +161,7 @@ cython_debug/
 
 # my files and folders
 .vscode
+todo.md
+TODO.md
+/del_late
 
