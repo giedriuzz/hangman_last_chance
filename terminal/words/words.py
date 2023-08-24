@@ -124,3 +124,11 @@ words = {
         "WATERMELON",
     ],
 }
+
+
+def get_categories_enumerated(categories: dict):
+    for cat in enumerate(categories, 1):
+        print(cat)
+    
+        
+get_categories_enumerated(categories=words)
