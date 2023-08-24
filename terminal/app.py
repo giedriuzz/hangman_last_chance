@@ -1,5 +1,7 @@
 """Main game script"""
 
+import logging
+import logging.config
 import sys
 from random import choice
 
@@ -9,6 +11,12 @@ from rules import rules
 from termcolor import colored
 from validation import input_only_en_letters, input_only_integer_value_not_bigger
 from words.words import words
+
+logging.config.fileConfig(
+    fname="Hangman_last_chance/terminal/logging.conf", disable_existing_loggers=False
+)
+logger = logging.getLogger("sampleLogger")
+
 
 greeting = colored(
     " === Welcome to Hangman game! ===", "red", "on_light_blue", attrs=["bold"]
@@ -42,8 +50,11 @@ while True:
         LENGTH = 0
         while LENGTH < 10:
             LENGTH += 1
+            logging.debug("Round: %s/10", LENGTH)  # * Logging
             get_category_value = categories_dict[category]
+            logger.debug("Category: %s", get_category_value)  # * Logging
             guessing_word = choice(words[get_category_value])
+            logger.debug("Guessing word: %s", guessing_word)  # * Logging
             guessed_word_in_list = list(guessing_word)
             word_declaration = Words(word=guessing_word)
 
@@ -56,13 +67,15 @@ while True:
 
             print(f'\n{colored("Round: ", "red")} {LENGTH}/10')
             print(_say_choose_category, get_category_value)
-            # print(_say_guessing_word, *word.empty_word_list)
             print(_say_guessing_word, *["_" for _ in range(len(guessing_word))])
 
             while True:
                 string_only_en_letters = input_only_en_letters(
                     colored("Guess a letter or all word: ", "yellow")
                 )
+                logger.debug(
+                    "Letter in input() : %s", string_only_en_letters
+                )  # * Logging
                 letter = Letter(word_declaration, string_only_en_letters)
                 letter.create_empty_word_list()
                 if letter.inspect_letters() is False:
@@ -79,12 +92,15 @@ while True:
                         )
                         if letter.is_word_guessed() is True:
                             print(colored(" == You guessed the word !!! == ", "yellow"))
-
+                            logger.debug("Guessed word: %s", guessing_word)  # * Logging
                             break
                         print(
                             colored("Letters left: ", "green"),
                             *letter.remove_used_letter_from_list(),
                         )
+                        logger.debug(
+                            "Guessed letter: %s", string_only_en_letters
+                        )  # * Logging
                         continue
                     # * When letter is not in word
                     if letter.get_hangman() == 7:
@@ -107,6 +123,9 @@ while True:
                         colored("Letters left: ", "green"),
                         *letter.remove_used_letter_from_list(),
                     )
+                    logger.debug(
+                        "Not guessed letter was: %s", string_only_en_letters
+                    )  # * Logging
                     continue
                 # * When word is not guessed
                 if letter.is_word_equal(string_only_en_letters) is False:
@@ -116,7 +135,9 @@ while True:
                         colored("Word was: ", "blue", attrs=["bold"]),
                         *guessed_word_in_list,
                     )
-
+                    logger.debug(
+                        "Guessed all word: %s", string_only_en_letters
+                    )  # * Logging
                     break
                 print(colored(" == You guessed the word !!! == ", "yellow"))
                 break
@@ -128,7 +149,7 @@ while True:
     elif CHOOSING == 3:
         print(
             f'{colored("Closed game application!", "red")}\n'
-            f"If you want to play again, run"
+            f"If you want to play again, run "
             f'{colored("app.py", "red",attrs=["bold"])} file!'
         )
 

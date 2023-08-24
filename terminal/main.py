@@ -98,7 +98,6 @@ class Letter:
 
         for get_letter in enumerate(self.word):
             if get_letter[1] == self.letter.upper():
-                self.MATCHED_LETTERS.append(get_letter[1].upper())
                 self.empty_word_list[get_letter[0]] = self.letter.upper()
             continue
         return self.empty_word_list

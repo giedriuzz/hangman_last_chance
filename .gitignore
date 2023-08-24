@@ -164,4 +164,5 @@ cython_debug/
 todo.md
 TODO.md
 /del_late
-
+logfile.log
+logging.log
