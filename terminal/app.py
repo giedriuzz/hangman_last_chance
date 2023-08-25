@@ -33,8 +33,8 @@ while True:
             f'\n{colored("Choose: ", "blue")}',
         )
     )
+    # * Game area
     if CHOOSING == 1:
-        # * Game area
         categories = Categories(words)
         categories_dict = categories.get_categories_enumerated()
         print()
@@ -50,6 +50,7 @@ while True:
         LENGTH = 0
         while LENGTH < 10:
             LENGTH += 1
+            # Get category value, guessing word, guessed word in list
             logging.debug("Round: %s/10", LENGTH)  # * Logging
             get_category_value = categories_dict[category]
             logger.debug("Category: %s", get_category_value)  # * Logging
@@ -57,14 +58,14 @@ while True:
             logger.debug("Guessing word: %s", guessing_word)  # * Logging
             guessed_word_in_list = list(guessing_word)
             word_declaration = Words(word=guessing_word)
-
+            # Create empty word list, reset all lists and variables after each round
             letter = Letter(word_declaration, "")
             letter.LETTERS_LIST.clear()
             letter.reload_letters_list()
             letter.MATCHED_LETTERS.clear()
             letter.NOT_MATCHED_LETTERS.clear()
             letter.empty_word_list.clear()
-
+            # Print game area
             print(f'\n{colored("Round: ", "red")} {LENGTH}/10')
             print(_say_choose_category, get_category_value)
             print(_say_guessing_word, *["_" for _ in range(len(guessing_word))])
@@ -80,7 +81,6 @@ while True:
                 letter.create_empty_word_list()
                 if letter.inspect_letters() is False:
                     continue
-
                 STRING = letter.inspect_letters()
                 if len(string_only_en_letters) == 1:
                     # * When letter is in word
@@ -93,6 +93,7 @@ while True:
                         if letter.is_word_guessed() is True:
                             print(colored(" == You guessed the word !!! == ", "yellow"))
                             logger.debug("Guessed word: %s", guessing_word)  # * Logging
+                            logger.debug("Win a GAME!")  # * Logging
                             break
                         print(
                             colored("Letters left: ", "green"),
@@ -110,7 +111,7 @@ while True:
                             colored("Word was: ", "blue", attrs=["bold"]),
                             *guessed_word_in_list,
                         )
-
+                        logger.debug("Lose a GAME!")  # * Logging
                         break
                     print(colored(_SAY_DONT_GUESSED, "red"))
                     print(hangman[letter.get_hangman()])
@@ -136,16 +137,19 @@ while True:
                         *guessed_word_in_list,
                     )
                     logger.debug(
-                        "Guessed all word: %s", string_only_en_letters
+                        "Not guesses word in input(): %s", string_only_en_letters
                     )  # * Logging
+                    logger.debug("Lose a GAME!")  # * Logging
                     break
+                logger.debug("Win a GAME!")  # * Logging
                 print(colored(" == You guessed the word !!! == ", "yellow"))
                 break
+        logger.debug("GAME OVER!")  # * Logging
         print(colored(" == Game over == ", "red", attrs=["reverse", "blink"]))
-
+    # * Rules area
     elif CHOOSING == 2:
         rules()
-
+    # * Quit area
     elif CHOOSING == 3:
         print(
             f'{colored("Closed game application!", "red")}\n'
