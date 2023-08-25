@@ -26,11 +26,12 @@ left leg, right leg, left arm, right arm, rope.
 
 ## Start a game
 
-First clone a repository:
+First clone a repository, it will be better if you create you own python environment.
 
 ```
 git clone https://github.com/giedriuzz/Hangman_last_chance.git
 ```
+Import all libs from `requirements.txt` or from `Pipfile.lock`  
 And run `app.py` file where is in **`terminal`** folder.
 
 ```
@@ -43,54 +44,25 @@ If you don`t have virtual environment just run
 python3 app.py
 ```
 
-## Add new Words
+## Add new Categories and Words
 
-To add new `Words` you must to edit `words.py` file where is in **`words`** folder.  
-And just edit you choose category.
-
-## Add new Categories
-
-To add new `Categories` you must to edit `words.py` file where is in **`words`** folder.  
+To edit or add new `Categories` and `words` you must edit `words.py` file where is in **`words`** folder.  
 
 #### `words.py`
 
 ```python
 words = {
-    1: [
+    "Countries: [
         "AFGHANISTAN",
         "ALBANIA",
         "ALGERIA",
-    ]....
-    4: ["New_word_1", 
+    ],
+    "NEW_CATEGORY": [  
+        "New_word_1",  
         "New_word_2
     ]
 ```
-And add new `Category` name in file `app.py`, need change `categories` and `category` variables.  
 
-*`app.py`*
-
-- `category = `
-
-```python
-# category, add new category here
-category = int(
-            input_only_integer_value_not_bigger(
-                3,
-                f'\n{colored("1. Countries", "yellow", attrs=["bold"])}'
-                f'\n{colored("2. Animals", "green", attrs=["bold"])}'
-                f'\n{colored("3. Fruits", "red", attrs=["bold"])}'
-                f'\n{colored("4. [ NEW_CATEGORY ]", "red", attrs=["bold"])}' # example
-                f'\n{colored("Choose: ", "blue")}',
-            )
-        )
-```
-
-- `categories = `
-
-```python
-# categories, add new category here
-categories = {1: "Countries", 2: "Animals", 3: "Fruits", 4: [ NEW_CATEGORY ]}
-```
 
 ***
 

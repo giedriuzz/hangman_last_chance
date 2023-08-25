@@ -23,7 +23,7 @@ Requirements:
 - [x] Use python functions and/or classes to achieve necessary functionality.
 - [x] Possible words should be held in a list data structure.
 - [x] Use type annotations.
-- [] Use `print` or logging library to log out information.
+- [x] Use `print` or logging library to log out information.
 
 ## Task (maximum score : 10):
 
@@ -40,16 +40,16 @@ https://www.youtube.com/watch?v=leW9ZotUVYo
 
 Requirements:
 
-- Create a new GITHUB project, virtual env, README, .gitignore, etc.
-- Use OOP structures (classes, inheritance, etc) t o construct game backend logic.
-- Create user registration (name,surname, email).
-- Use Sql and/or NoSql databases to store all necessary data.
+- [x] Create a new GITHUB project, virtual env, README, .gitignore, etc.
+- [x] Use OOP structures (classes, inheritance, etc) t o construct game backend logic.
+- [ ] Create user registration (name,surname, email).
+- [ ] Use Sql and/or NoSql databases to store all necessary data.
 
 - [] create database and tables with relationships
 
-- Use type annotations.
-- Use a logging library to log out information.
-- Unit tests to cover most important functionality.
-- After the game session, show a table with user information, games played , games
+- [ ] Use type annotations.
+- [ ] Use a logging library to log out information.
+- [ ] Unit tests to cover most important functionality.
+- [ ] After the game session, show a table with user information, games played , games
 won/lost, guesses made.
-- Dockerize all parts of application as microservices.
+- [ ] Dockerize all parts of application as microservices.

@@ -24,3 +24,5 @@ def input_only_en_letters(input_text: str) -> str:
                 return string
             print("Input accepts only English alphabetic letters!")
             continue
+        print("Input accepts only English alphabetic letters!")
+        continue
