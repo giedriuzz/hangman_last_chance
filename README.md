@@ -23,7 +23,7 @@ is drawn in 7 parts (for 7 letter guesses) in the order: gallows, head, body,
 left leg, right leg, left arm, right arm, rope.
 
 ***
-
+# Terminal version
 ## Start a game
 
 First clone a repository, it will be better if you create you own python environment.
