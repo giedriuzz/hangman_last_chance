@@ -13,7 +13,7 @@ Hangman is a simple word guessing game. Player try to figure out an unknown
 word by guessing letters. If too many letters which do not appear in the word  
 are guessed, the player is hanged (and loses).
 <p align="center" width="100%">
-<img width="15%" src="terminal/pictures/hanged.png">
+<img width="15%" src="src/pictures/hanged.png">
 </p>
 
 As letters in the word are guessed, choose and write letter in terminal.  
@@ -59,11 +59,16 @@ words = {
     ],
     "NEW_CATEGORY": [  
         "New_word_1",  
-        "New_word_2
-    ]
+        "New_word_2"
+        ]
 ```
 
 
 ***
 
-Game running in two **[Docker](https://www.docker.com)** containers. One container hold database an in other one Hangman application.  
+<p align="left" width="100%">
+<img width="15%" src="src/pictures/docker.png">
+</p>
+
+`Ongoing work`
+>> Game running in two **[Docker](https://www.docker.com)** containers. One container hold database an in other one Hangman application.  
