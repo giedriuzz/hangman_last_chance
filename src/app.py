@@ -13,7 +13,7 @@ from validation import input_only_en_letters, input_only_integer_value_not_bigge
 from words.words import words
 
 logging.config.fileConfig(
-    fname="Hangman_last_chance/terminal/logging.conf", disable_existing_loggers=False
+    fname="Hangman_last_chance/src/logging.conf", disable_existing_loggers=False
 )
 logger = logging.getLogger("sampleLogger")
 

@@ -59,11 +59,13 @@ words = {
     ],
     "NEW_CATEGORY": [  
         "New_word_1",  
-        "New_word_2
-    ]
+        "New_word_2"
+        ]
 ```
 
 
 ***
 
-Game running in two **[Docker](https://www.docker.com)** containers. One container hold database an in other one Hangman application.  
+## Docker :whale:
+`Ongoing work`
+>> Game running in two **[Docker](https://www.docker.com)** containers. One container hold database an in other one Hangman application.  

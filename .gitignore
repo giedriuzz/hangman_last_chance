@@ -163,6 +163,6 @@ cython_debug/
 .vscode
 todo.md
 TODO.md
-/del_late
+/terminal/del_late/
 logfile.log
 logging.log
