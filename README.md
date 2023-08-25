@@ -44,14 +44,9 @@ If you don`t have virtual environment just run
 python3 app.py
 ```
 
-## Add new Words
+## Add new Categories and Words
 
-To add new `Words` you must to edit `words.py` file where is in **`words`** folder.  
-And just edit you choose category.
-
-## Add new Categories
-
-To add new `Categories` and `words` you must edit `words.py` file where is in **`words`** folder.  
+To edit or add new `Categories` and `words` you must edit `words.py` file where is in **`words`** folder.  
 
 #### `words.py`
 
