@@ -1,4 +1,7 @@
 """Module for validating inputs"""
+import datetime
+import random
+import time
 
 
 def input_only_integer_value_not_bigger(value_size: int, input_text: str) -> int:
@@ -69,3 +72,16 @@ def input_only_letters(input_text: str) -> str:
             return string
         print("Input accepts only letters!")
         continue
+
+
+def get_unique_id() -> int:
+    """Get unique id"""
+    timestamp = int(time.time())
+    random_number = random.randint(1000, 9999)
+    return timestamp - random_number
+
+
+def get_gaming_time(start_time: datetime, end_time: datetime) -> datetime:
+    """Get gaming time"""
+    gaming_time = end_time - start_time
+    return gaming_time.seconds % 60

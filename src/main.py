@@ -124,6 +124,10 @@ class Letter:
             return True
         return False
 
+    def get_guesses(self) -> int:
+        """Get guesses"""
+        return len(Letter.NOT_MATCHED_LETTERS) + len(Letter.MATCHED_LETTERS)
+
 
 class Categories:
     """Class for work with categories"""

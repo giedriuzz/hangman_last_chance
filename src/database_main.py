@@ -1,10 +1,10 @@
 """Module for database data manipulation"""
 
 from abc import ABC, abstractmethod
+from datetime import datetime
 from typing import Union
 
-from database.db_direct import SqlDatabase
-from database.models.user import User
+from db_direct import SqlDatabase
 
 
 class Abstract(ABC):
@@ -71,12 +71,38 @@ class DatabaseIntermediate(Abstract):
         category = self.base.get_words_category()
         return [*category]
 
+    def add_round(
+        self,
+        game_id: int,
+        word: str,
+        guess_time: datetime,
+        hanged: bool,
+        guesses_made: int,
+        user_id: int,
+    ) -> None:
+        """Add round"""
+        self.base.add_game_to_db(
+            game_id=game_id,
+            word=word,
+            guess_time=guess_time,
+            hanged=hanged,
+            guesses_made=guesses_made,
+            user_id=user_id,
+        )
+
+    def get_game_info(self, game_id: int) -> tuple:
+        """Get game info"""
+        game = self.base.get_game_info_by_game_id(game_id=game_id)
+
+        return (
+            f"\nGame date: {game[0][0].date()}",
+            f"\nGamed time: {game[1]}",
+            f"\nGames wined: {game[2]}",
+            f"\nGames lost: {game[3]}",
+        )
+
 
 if __name__ == "__main__":
-    mng = DatabaseIntermediate(db_name="hangman")
-    # users = mng.check_user_by_passwd_mail(
-    #     user_passwd="123", user_email="kgiedrius@namas.lt"
-    # )
-    # print(users)
+    mng = DatabaseIntermediate("hangman")
 
-    print(mng.get_words_by_category_difficulty(category="countries", difficulty=3))
+    print(*mng.get_game_info(1693159639))

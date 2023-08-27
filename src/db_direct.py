@@ -7,9 +7,10 @@ from database.db.db_base import Base
 from database.models.game import Game
 from database.models.user import User
 from database.models.words import Words
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
+from words.words import db_words_animals, db_words_countries, db_words_fruits
 
 
 class SqlDatabase:
@@ -17,12 +18,15 @@ class SqlDatabase:
 
     def __init__(self, db_name: str) -> None:
         self.db_name = db_name
-        self.engine = create_engine(f"sqlite:///{self.db_name}.db")
+        self.engine = create_engine(
+            f"sqlite:////home/giedrius/Documents/CA_last_work/{self.db_name}.db"
+        )
         session = sessionmaker(bind=self.engine)
         self.session = session()
 
     def create_database(self):
         """Creates database if it does not exist"""
+
         Base.metadata.create_all(self.engine, checkfirst=True)
 
     def add_user_to_db(self, name: str, surname: str, email: str, passwd: str) -> None:
@@ -102,6 +106,50 @@ class SqlDatabase:
         except NoResultFound:
             return False
 
+    def get_game_by_game_id(self, game_id: int) -> Union[Game, bool]:
+        """
+        Args:
+            game_id (int): game id number
+        Get game by game id from base.
+        """
+        try:
+            game = self.session.query(Game).filter_by(game_id=game_id).all()
+            return game
+        except NoResultFound:
+            return False
+
+    def get_game_info_by_game_id(self, game_id: int) -> Union[list, bool]:
+        """
+        Args:
+            game_id (int): game id number
+        Get game by game id from base.
+        """
+        try:
+            game_date = (
+                self.session.query(Game.gamed_time).filter_by(game_id=game_id).first()
+            )
+
+            game_time = (
+                self.session.query(func.sum(Game.guesses_made))
+                .filter(Game.game_id == game_id)
+                .scalar()
+            )
+
+            games_played = (
+                self.session.query(Game.hanged).filter(Game.game_id == game_id).count()
+            )
+            # sum all win games
+            games_wins = (
+                self.session.query(Game.hanged)
+                .filter(Game.game_id == game_id)
+                .filter(Game.hanged == 1)
+                .count()
+            )
+            games_lost = games_played - games_wins
+            return [game_date, game_time, games_wins, games_lost]
+        except NoResultFound:
+            return False
+
     def add_words_in_table(self, category: str, *words) -> None:
         """
         Args:
@@ -110,9 +158,7 @@ class SqlDatabase:
         """
         for word in words:
             word_difficulty = len(word)
-            add_word = Words(
-                word=word.upper(), category=category.lower(), difficulty=word_difficulty
-            )
+            add_word = Words(word=word, category=category, difficulty=word_difficulty)
             self.session.add(add_word)
             self.session.commit()
 
@@ -167,43 +213,36 @@ class SqlDatabase:
             words_list.append(word.word)
         return words_list
 
+    def check_if_word_in_base(self, category: str, word: str) -> bool:
+        """
+        Args:
+            word (str): _description_
+        Check if word in base.
+        """
+        words = self.session.query(Words).filter_by(category=category).all()
+        words_list: list = []
+        for word in words:
+            words_list.append(word.word)
+        if word in words_list:
+            return word
+        return False
 
-#     def get_users(self) -> list[int]:
-#         users = self.session.query(User).all()
-#         user_ids: list = []
-#         print("ID")
-#         for user in users:
-#             user_ids.append(user.id)
-#         return user_ids
-
-#     def delete_user(self, user_id: int) -> None:
-#         user = self.session.query(User).get(user_id)
-#         self.session.delete(user)
-#         self.session.commit()
-
-#     def delete_user_task(self, task_id: int) -> None:
-#         task = self.session.query(Task).get(task_id)
-#         self.session.delete(task)
-#         self.session.commit()
-
-#     def check_password(self, users_email: str, user_passwd: str) -> bool:
-#         self.users_email = users_email
-#         try:
-#             by_user_email = (
-#                 self.session.query(User).filter_by(user_email=self.users_email).first()
-#             )
-#             if by_user_email.user_passwd == user_passwd:  # type:ignore #!
-#                 return True
-#             else:
-#                 return False
-
-#         except:
-#             return False
-
-
-# * pirmą kartą sukuriant db, užkomentuoti šitą eilutę
-# database = SqlDatabase(filename="hangman")
-# database.create_database()
 
 if __name__ == "__main__":
-    pass
+    db = SqlDatabase("hangman")
+    # db.create_database()
+
+    # db_for_db = [db_words_animals, db_words_countries, db_words_fruits]
+    # for words_db in db_for_db:
+    #     unique_words = [word.upper() for word in set(words_db[1])]
+    #     check_words = db.check_if_word_in_base(
+    #         words_db[0][0], [words for words in unique_words]
+    #     )
+    #     if check_words is False:
+    #         db.add_words_in_table(words_db[0][0], *unique_words)
+    #     try:
+    #         unique_words.remove(check_words)
+    #     except ValueError:
+    #         continue
+
+    print(db.get_game_info_by_game_id(1693150309))
