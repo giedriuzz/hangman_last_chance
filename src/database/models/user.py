@@ -1,4 +1,5 @@
-from db.base import Base
+"""Module for user table in database"""
+from database.db.db_base import Base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship, validates
 

@@ -128,14 +128,14 @@ class Letter:
 class Categories:
     """Class for work with categories"""
 
-    def __init__(self, word_dict: dict):
-        self.word_dict = word_dict
+    def __init__(self, input_list: list):
+        self.input_list = input_list
 
     def get_categories_enumerated(self) -> Dict[int, str]:
         """Get categories enumerated"""
         categories_dict = {}
-        for category in enumerate(self.word_dict, 1):
-            categories_dict.update({category[0]: category[1]})
+        for category in enumerate(self.input_list, 1):
+            categories_dict.update({category[0]: category[1].capitalize()})
         return categories_dict
 
     def print_categories(self, categories_dict: dict) -> str:

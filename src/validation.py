@@ -12,6 +12,18 @@ def input_only_integer_value_not_bigger(value_size: int, input_text: str) -> int
         print(f"Input must to be an integer value not bigger than: {value_size} !")
 
 
+def return_dict_value_by_key(value_size: int, input_text: str, word_dict: dict) -> str:
+    """Validate input is integer not bigger than value size
+    value_size: max value size
+    input_text: what text want to see in input line
+    word_dict: dictionary with values"""
+    while True:
+        string = input(input_text)
+        if string.isdigit() is True and int(string) <= value_size:
+            return word_dict.get(int(string))
+        print(f"Input must to be an integer value not bigger than: {value_size} !")
+
+
 def input_only_en_letters(input_text: str) -> str:
     """Validate input is it only letters from English alphabet
     input_text: what text want to see in input line"""
@@ -25,4 +37,35 @@ def input_only_en_letters(input_text: str) -> str:
             print("Input accepts only English alphabetic letters!")
             continue
         print("Input accepts only English alphabetic letters!")
+        continue
+
+
+def input_email(email: str) -> str:
+    """Validate input is it only email"""
+    while True:
+        string = input(email)
+        if string.find("@") != -1:
+            return string
+        print("Input accepts only email!")
+        continue
+
+
+def input_passwd(password: str) -> str:
+    """Validate input is it without spaces and at least 3 symbols"""
+    while True:
+        string = input(password)
+        if string.find(" ") == -1 and len(string) >= 3:
+            return string
+        print("Input accepts only password without spaces and at least 3 symbols!")
+        continue
+
+
+def input_only_letters(input_text: str) -> str:
+    """Validate input is it only letters
+    input_text: what text want to see in input line"""
+    while True:
+        string = input(input_text)
+        if string.isalpha() is True:
+            return string
+        print("Input accepts only letters!")
         continue
