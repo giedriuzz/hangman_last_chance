@@ -7,10 +7,14 @@ from database.db.db_base import Base
 from database.models.game import Game
 from database.models.user import User
 from database.models.words import Words
-from sqlalchemy import create_engine, func
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
-from words.words import db_words_animals, db_words_countries, db_words_fruits
+from words.words import (
+    db_words_animals,  # noqa: F401
+    db_words_countries,  # noqa: F401
+    db_words_fruits,  # noqa: F401
+)
 
 
 class SqlDatabase:
@@ -130,11 +134,9 @@ class SqlDatabase:
             )
 
             game_time = (
-                self.session.query(func.sum(Game.guesses_made))
-                .filter(Game.game_id == game_id)
-                .scalar()
+                self.session.query(Game.guess_time).filter_by(game_id=game_id).all()
             )
-
+            game_time = [i[0] for i in game_time]
             games_played = (
                 self.session.query(Game.hanged).filter(Game.game_id == game_id).count()
             )
@@ -146,7 +148,7 @@ class SqlDatabase:
                 .count()
             )
             games_lost = games_played - games_wins
-            return [game_date, game_time, games_wins, games_lost]
+            return [game_date, sum(game_time), games_wins, games_lost]
         except NoResultFound:
             return False
 
@@ -229,9 +231,10 @@ class SqlDatabase:
 
 
 if __name__ == "__main__":
-    db = SqlDatabase("hangman")
+    ...  # <- remove dots ... after load words to database return dots and comment lines after this # noqa: E501
+    #################  uncomment lines after this ##############################
+    # db = SqlDatabase("hangman")
     # db.create_database()
-
     # db_for_db = [db_words_animals, db_words_countries, db_words_fruits]
     # for words_db in db_for_db:
     #     unique_words = [word.upper() for word in set(words_db[1])]
@@ -244,5 +247,3 @@ if __name__ == "__main__":
     #         unique_words.remove(check_words)
     #     except ValueError:
     #         continue
-
-    print(db.get_game_info_by_game_id(1693150309))

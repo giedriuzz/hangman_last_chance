@@ -43,23 +43,13 @@ def input_only_en_letters(input_text: str) -> str:
         continue
 
 
-def input_email(email: str) -> str:
+def input_only_email(email: str) -> str:
     """Validate input is it only email"""
     while True:
         string = input(email)
         if string.find("@") != -1:
             return string
         print("Input accepts only email!")
-        continue
-
-
-def input_passwd(password: str) -> str:
-    """Validate input is it without spaces and at least 3 symbols"""
-    while True:
-        string = input(password)
-        if string.find(" ") == -1 and len(string) >= 3:
-            return string
-        print("Input accepts only password without spaces and at least 3 symbols!")
         continue
 
 
@@ -83,5 +73,5 @@ def get_unique_id() -> int:
 
 def get_gaming_time(start_time: datetime, end_time: datetime) -> datetime:
     """Get gaming time"""
-    gaming_time = end_time - start_time
-    return gaming_time.seconds % 60
+    gaming_time = start_time - end_time
+    return int(gaming_time.total_seconds())

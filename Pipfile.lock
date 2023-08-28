@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0fc7e0490f2625eeb657a22fb680d28fc05eb6a0daba8d874a0b86a50c701578"
+            "sha256": "045ecab0f416b7e07835cc3cf2b75a66b6fdae264e5bd2eb02070f595efbdf4a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,13 @@
         ]
     },
     "default": {
+        "evdev": {
+            "hashes": [
+                "sha256:299db8628cc73b237fc1cc57d3c2948faa0756e2a58b6194b5bf81dc2081f1e3"
+            ],
+            "markers": "'linux' in sys_platform",
+            "version": "==1.6.1"
+        },
         "greenlet": {
             "hashes": [
                 "sha256:03a8f4f3430c3b3ff8d10a2a86028c660355ab637cee9333d63d66b56f09d52a",
@@ -110,6 +117,14 @@
             "index": "pypi",
             "version": "==3.0.0"
         },
+        "maskpass": {
+            "hashes": [
+                "sha256:49a9b46ae3838f21040c81d169cf2dca0b946881e1b44c0c55df9e2d50f7b623",
+                "sha256:73448856147a611cb7c9d98ff417f1e55884419e0864504584e0db9c6a57b60c"
+            ],
+            "index": "pypi",
+            "version": "==0.3.7"
+        },
         "mdit-py-plugins": {
             "hashes": [
                 "sha256:b51b3bb70691f57f974e257e367107857a93b36f322a9e6d44ca5bf28ec2def9",
@@ -134,6 +149,22 @@
             "index": "pypi",
             "version": "==2.16.1"
         },
+        "pynput": {
+            "hashes": [
+                "sha256:19861b2a0c430d646489852f89500e0c9332e295f2c020e7c2775e7046aa2e2f",
+                "sha256:264429fbe676e98e9050ad26a7017453bdd08768adb25cafb918347cf9f1eb4a",
+                "sha256:3a5726546da54116b687785d38b1db56997ce1d28e53e8d22fc656d8b92e533c"
+            ],
+            "version": "==1.7.6"
+        },
+        "python-xlib": {
+            "hashes": [
+                "sha256:55af7906a2c75ce6cb280a584776080602444f75815a7aff4d287bb2d7018b32",
+                "sha256:c3534038d42e0df2f1392a1b30a15a4ff5fdc2b86cfa94f072bf11b10a164398"
+            ],
+            "markers": "'linux' in sys_platform",
+            "version": "==0.33"
+        },
         "rich": {
             "hashes": [
                 "sha256:146a90b3b6b47cac4a73c12866a499e9817426423f57c5a66949c086191a8808",
@@ -141,6 +172,14 @@
             ],
             "index": "pypi",
             "version": "==13.5.2"
+        },
+        "six": {
+            "hashes": [
+                "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
+                "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
+            ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "version": "==1.16.0"
         },
         "sqlalchemy": {
             "hashes": [

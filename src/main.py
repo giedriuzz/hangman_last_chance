@@ -159,13 +159,16 @@ class Categories:
             "light_magenta",
             "light_cyan",
         ]
+        print(
+            f'{colored("           Categories               ","green", "on_light_grey", attrs=["bold"])}\n'  # noqa: E501
+        )
         for category_key, category_value in categories_dict.items():
             random_color = choice(colors)
             print(
-                f"{colored(category_key, random_color)}."
-                f"{colored(category_value, random_color)}"
+                f"        {colored(category_key, random_color, attrs=['bold'])}."
+                f"{colored(category_value, random_color, attrs=['bold'])}"
             )
-        return colored("Choose a category: ", "green")
+        return colored("\nChoose a category: ", "blue")
 
 
 if __name__ == "__main__":

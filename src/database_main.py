@@ -1,10 +1,12 @@
 """Module for database data manipulation"""
 
 from abc import ABC, abstractmethod
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Union
 
 from db_direct import SqlDatabase
+from termcolor import colored
+import time
 
 
 class Abstract(ABC):
@@ -94,15 +96,39 @@ class DatabaseIntermediate(Abstract):
         """Get game info"""
         game = self.base.get_game_info_by_game_id(game_id=game_id)
 
-        return (
-            f"\nGame date: {game[0][0].date()}",
-            f"\nGamed time: {game[1]}",
-            f"\nGames wined: {game[2]}",
-            f"\nGames lost: {game[3]}",
+        text = (
+            f"\n\nGame date: {colored(game[0][0].date(), 'blue')}"
+            f'\nGame time: {colored("{}".format(str(timedelta(seconds=game[1]))), "blue")}'  # noqa: E501
+            f"\nGames wined: {colored(game[2], 'blue')}"
+            f"\nGames lost: {colored(game[3], 'blue')}\n"
         )
+        time.sleep(2)
+        print(text)
+
+    def get_rounds_info(self, game_id: int) -> tuple:
+        """Get rounds info"""
+        rounds = self.base.get_game_by_game_id(game_id=game_id)
+        round_number = 0
+        for one_round in rounds:
+            round_number += 1
+            if round_number <= 9:
+                rounds_number = " " + str(round_number) + "."
+            else:
+                rounds_number = str(round_number) + "."
+
+            if one_round.hanged == 0:
+                hanged = "Yes"
+            else:
+                hanged = "No"
+            text = (
+                f"{rounds_number} Guessed word: {colored(one_round.word, 'blue')}"
+                f" | Guesses made: {colored(one_round.guesses_made, 'blue')}"
+                f" | Guess time: {colored('{}'.format(str(timedelta(seconds=one_round.guess_time))), 'blue')}"  # noqa: E501
+                f" | Hanged: {colored(hanged, 'blue')}"
+            )
+            time.sleep(0.5)
+            print(text)
 
 
 if __name__ == "__main__":
-    mng = DatabaseIntermediate("hangman")
-
-    print(*mng.get_game_info(1693159639))
+    ...
