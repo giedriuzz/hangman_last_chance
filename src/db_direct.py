@@ -25,6 +25,7 @@ class SqlDatabase:
         self.engine = create_engine(
             f"sqlite:////home/giedrius/Documents/CA_last_work/{self.db_name}.db"
         )
+        # self.engine = create_engine(f"sqlite:////db/{self.db_name}.db")
         session = sessionmaker(bind=self.engine)
         self.session = session()
 
@@ -105,7 +106,7 @@ class SqlDatabase:
             games = self.session.query(Game).filter_by(user_id=user_id).all()
             games_id: list = []
             for game in games:
-                games_id.append(game.id)
+                games_id.append(game.game_id)
             return games_id
         except NoResultFound:
             return False
@@ -231,19 +232,22 @@ class SqlDatabase:
 
 
 if __name__ == "__main__":
-    ...  # <- remove dots ... after load words to database return dots and comment lines after this # noqa: E501
-    #################  uncomment lines after this ##############################
-    # db = SqlDatabase("hangman")
-    # db.create_database()
-    # db_for_db = [db_words_animals, db_words_countries, db_words_fruits]
-    # for words_db in db_for_db:
-    #     unique_words = [word.upper() for word in set(words_db[1])]
-    #     check_words = db.check_if_word_in_base(
-    #         words_db[0][0], [words for words in unique_words]
-    #     )
-    #     if check_words is False:
-    #         db.add_words_in_table(words_db[0][0], *unique_words)
-    #     try:
-    #         unique_words.remove(check_words)
-    #     except ValueError:
-    #         continue
+
+    def load_words():
+        """Function for load words in database"""
+        db = SqlDatabase("hangman")
+        db.create_database()
+        db_for_db = [db_words_animals, db_words_countries, db_words_fruits]
+        for words_db in db_for_db:
+            unique_words = [word.upper() for word in set(words_db[1])]
+            check_words = db.check_if_word_in_base(
+                words_db[0][0], [words for words in unique_words]
+            )
+            if check_words is False:
+                db.add_words_in_table(words_db[0][0], *unique_words)
+            try:
+                unique_words.remove(check_words)
+            except ValueError:
+                continue
+
+    # load_words() # * uncomment this line if you want to load words in database

@@ -7,10 +7,11 @@ import maskpass
 def login_register_text() -> str:
     """Text for registration"""
     text = (
-        f"\n{colored('        1. Register', 'green', attrs=['bold'])}"
-        f"\n{colored('        2. Login', 'yellow', attrs=['bold'])}"
+        f"\n\n{colored('        1. Register', 'white', attrs=['bold'])}"
+        f"\n{colored('        2. Login', 'white', attrs=['bold'])}"
+        f"\n{colored('        3. Play without registration', 'white', attrs=['bold'])}"
         f"\n"
-        f"\n{colored('Choose: ', 'blue')}"
+        f"\nChoose: "
     )
     return text
 
@@ -18,11 +19,11 @@ def login_register_text() -> str:
 def level() -> str:
     """Text for level"""
     text = (
-        f'\n{colored("           Level               ","green", "on_light_grey", attrs=["bold"])}'  # noqa: E501
+        f'\n{colored("           Level               ","black", "on_white", attrs=["bold"])}'  # noqa: E501
         f"\n\n{colored('        1. Easy', 'green', attrs=['bold'])}"
         f"\n{colored('        2. Medium', 'yellow', attrs=['bold'])}"
         f"\n{colored('        3. Hard', 'red', attrs=['bold'])}"
-        f"\n\n{colored('Choose: ', 'blue')}"
+        f"\nChoose: "
     )
     return text
 
@@ -30,23 +31,24 @@ def level() -> str:
 def game_menu() -> str:
     """Text for game menu"""
     text = (
-        f'\n{colored("           Game menu               ","green", "on_light_grey", attrs=["bold"])}'  # noqa: E501
-        f'\n\n{colored("        1. Start the game", "yellow", attrs=["bold"])}'
-        f'\n{colored("        2. Rules", "green", attrs=["bold"])}'
-        f'\n{colored("        3. Quit", "red", attrs=["bold"])}'
-        f'\n\n{colored("Choose: ", "blue")}'
+        f'\n{colored("           Game menu               ","white", "on_white", attrs=["bold"])}'  # noqa: E501
+        f'\n\n{colored("        1. Start the game", "white", attrs=["bold"])}'
+        f'\n{colored("        2. Rules", "white", attrs=["bold"])}'
+        f'\n{colored("        3. You Games", "white", attrs=["bold"])}'
+        f'\n{colored("        4. Quit", "white", attrs=["bold"])}'
+        f"\n\nChoose: "
     )
     return text
 
 
 def input_email() -> str:
     """Text for input email"""
-    email = input_only_email(colored("\nEmail: ", "yellow"))
+    email = input_only_email(colored("Email: ", "white"))
     return email
     # return text
 
 
 def input_passwd() -> str:
     """Text for input password"""
-    passwd = maskpass.askpass(prompt=colored("Password: ", "yellow"), mask="*")
+    passwd = maskpass.askpass(prompt=colored("Password: ", "white"), mask="*")
     return passwd

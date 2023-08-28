@@ -36,16 +36,11 @@ def game(db_name: str) -> None:
     print("\n", greeting)
 
     while True:
-        register = input_only_integer_value_not_bigger(3, login_register_text())
+        register = input_only_integer_value_not_bigger(4, login_register_text())
         if register == 1:
             print(
-                colored(
-                    "            Register               ",
-                    "green",
-                    "on_light_grey",
-                    attrs=["bold"],
-                )
-            )
+                f'\n{colored("             Register              ","black", "on_white", attrs=["bold"])}'
+            )  # noqa: E501
             name = input_only_letters(colored("\nName: ", "yellow"))
             surname = input_only_letters(colored("Surname: ", "yellow"))
             email, passwd = input_email(), input_passwd()
@@ -64,7 +59,8 @@ def game(db_name: str) -> None:
                     "green",
                     "on_light_grey",
                     attrs=["bold"],
-                )
+                ),
+                "\n",
             )
             email, passwd = input_email(), input_passwd()
             user = db_base.check_user_by_passwd_mail(
@@ -79,6 +75,10 @@ def game(db_name: str) -> None:
                 f'{colored(name, "yellow", attrs=["bold"])}'
                 f'{colored(" you are logged in!", "yellow", attrs=["bold"])}'
             )
+        if register == 3:
+            quest = register
+        else:
+            quest = 0
         while True:
             choosing = int(input_only_integer_value_not_bigger(3, game_menu()))
             print()
@@ -213,34 +213,42 @@ def game(db_name: str) -> None:
                         logger.debug("Win a GAME!")  # * Logging
                         print(_say_guessed_word)
                         break
+                    if quest != 3:
+                        finish_time = datetime.datetime.now()
+                        guess_time = get_gaming_time(finish_time, start_time)
+                        db_base.add_round(
+                            game_id=game_id,
+                            word=guessing_word,
+                            guess_time=guess_time,
+                            hanged=hanged_bool,
+                            guesses_made=letter.get_guesses(),
+                            user_id=user_id,
+                        )
 
-                    finish_time = datetime.datetime.now()
-                    guess_time = get_gaming_time(finish_time, start_time)
-
-                    db_base.add_round(
-                        game_id=game_id,
-                        word=guessing_word,
-                        guess_time=guess_time,
-                        hanged=hanged_bool,
-                        guesses_made=letter.get_guesses(),
-                        user_id=user_id,
+                if quest != 3:
+                    db_base.get_game_info(game_id=game_id)
+                    db_base.get_rounds_info(game_id=game_id)
+                    logger.debug("GAME OVER!")  # * Logging
+                    print(
+                        colored(
+                            "          == GAME OVER ==          ",
+                            "white",
+                            "on_red",
+                            attrs=["bold"],
+                        )
                     )
-                db_base.get_game_info(game_id=game_id)
-                db_base.get_rounds_info(game_id=game_id)
-                logger.debug("GAME OVER!")  # * Logging
-                print(
-                    colored(
-                        "          == GAME OVER ==          ",
-                        "white",
-                        "on_red",
-                        attrs=["bold"],
-                    )
-                )
             # * Rules area
             elif choosing == 2:
                 rules()
-            # * Quit area
+            # * You Games
             elif choosing == 3:
+                db_base.get_unique_games_id_by_user_id(user_id=user_id)
+                for game_id in db_base.get_unique_games_id_by_user_id(user_id=user_id):
+                    db_base.get_game_info(game_id=game_id)
+                    db_base.get_rounds_info(game_id=game_id)
+
+            # * Quit area
+            elif choosing == 4:
                 print(
                     f'{colored("Closed game application!", "red")}\n'
                     f"If you want to play again, run "

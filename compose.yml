@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  db:
+    image: nouchka/sqlite3
+    volumes:
+      - ./db:/home/giedrius/Documents/CA_last_work
+    command: sqlite3 /db/hangman.db
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ./:/home/giedrius/Documents/app
+      - ./db/:/app/db/
+    command: python app_db.py
