@@ -9,6 +9,7 @@ from db_direct import SqlDatabase
 from termcolor import colored
 
 
+# pylint: disable=line-too-long consider-using-f-string
 class Abstract(ABC):
     """Blueprint for database data manipulation"""
 

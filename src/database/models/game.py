@@ -1,6 +1,7 @@
 """Module for game table in database"""
 
 import datetime
+
 from database.db.db_base import Base
 from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship

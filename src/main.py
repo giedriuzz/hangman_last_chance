@@ -6,6 +6,8 @@ from typing import Dict, List, Union
 
 from termcolor import colored
 
+# pylint: disable=line-too-long
+
 
 @dataclass
 class Words:
@@ -86,12 +88,6 @@ class Letter:
             self.NOT_MATCHED_LETTERS.append(self.letter)
             return False
         return self.letter
-
-    def is_letter_used(self, letter: str) -> bool:
-        """Check is a letter is used"""
-        if letter.upper() in self.MATCHED_LETTERS:
-            return False
-        return True
 
     def replace_guessed_letter(self) -> list:
         """Replace a letter if it is in the word"""

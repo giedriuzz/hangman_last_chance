@@ -1,25 +1,34 @@
 """Main game script"""
 
+import datetime
 import logging
 import logging.config
 import sys
-import datetime
 from random import choice
 
 from database_main import DatabaseIntermediate
 from hangman import hangman
+from inputs import (
+    game_menu,
+    game_menu_quest,
+    input_email,
+    input_passwd,
+    level,
+    login_register_text,
+)
 from main import Categories, Letter, Words
 from rules import rules
 from termcolor import colored
 from validation import (
+    get_gaming_time,
     get_unique_id,
     input_only_en_letters,
     input_only_integer_value_not_bigger,
     input_only_letters,
     return_dict_value_by_key,
-    get_gaming_time,
 )
-from inputs import login_register_text, input_email, input_passwd, game_menu, level
+
+# pylint: disable=line-too-long
 
 
 def game(db_name: str) -> None:
@@ -36,13 +45,13 @@ def game(db_name: str) -> None:
     print("\n", greeting)
 
     while True:
-        register = input_only_integer_value_not_bigger(4, login_register_text())
+        register = input_only_integer_value_not_bigger(3, login_register_text())
         if register == 1:
             print(
-                f'\n{colored("             Register              ","black", "on_white", attrs=["bold"])}'
-            )  # noqa: E501
-            name = input_only_letters(colored("\nName: ", "yellow"))
-            surname = input_only_letters(colored("Surname: ", "yellow"))
+                f'\n{colored("             Register              ","black", "on_white", attrs=["bold"])}'  # noqa: E501
+            )
+            name = input_only_letters(colored("\nName: ", "white", attrs=["bold"]))
+            surname = input_only_letters(colored("Surname: ", "white", attrs=["bold"]))
             email, passwd = input_email(), input_passwd()
             db_base.get_user_for_register(
                 name=name, surname=surname, email=email, passwd=passwd
@@ -56,8 +65,8 @@ def game(db_name: str) -> None:
             print(
                 colored(
                     "              Login                ",
-                    "green",
-                    "on_light_grey",
+                    "black",
+                    "on_white",
                     attrs=["bold"],
                 ),
                 "\n",
@@ -76,11 +85,17 @@ def game(db_name: str) -> None:
                 f'{colored(" you are logged in!", "yellow", attrs=["bold"])}'
             )
         if register == 3:
-            quest = register
+            quest = 1
         else:
             quest = 0
+
         while True:
-            choosing = int(input_only_integer_value_not_bigger(3, game_menu()))
+            if quest == 1:
+                choosing = int(
+                    input_only_integer_value_not_bigger(3, game_menu_quest())
+                )
+            else:
+                choosing = int(input_only_integer_value_not_bigger(4, game_menu()))
             print()
             # * Game area
             if choosing == 1:

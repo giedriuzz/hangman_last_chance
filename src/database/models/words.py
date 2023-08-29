@@ -1,7 +1,8 @@
 """Model for the words table in the database"""
 
-from database.db.db_base import Base
 from sqlalchemy import Column, Integer, String
+
+from database.db.db_base import Base
 
 
 class Words(Base):

@@ -10,11 +10,9 @@ from database.models.words import Words
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
-from words.words import (
-    db_words_animals,  # noqa: F401
-    db_words_countries,  # noqa: F401
-    db_words_fruits,  # noqa: F401
-)
+from words.words import db_words_animals  # noqa: F401
+from words.words import db_words_countries  # noqa: F401
+from words.words import db_words_fruits  # noqa: F401
 
 
 class SqlDatabase:
@@ -29,9 +27,8 @@ class SqlDatabase:
         session = sessionmaker(bind=self.engine)
         self.session = session()
 
-    def create_database(self):
+    def create_database(self) -> None:
         """Creates database if it does not exist"""
-
         Base.metadata.create_all(self.engine, checkfirst=True)
 
     def add_user_to_db(self, name: str, surname: str, email: str, passwd: str) -> None:
@@ -141,7 +138,6 @@ class SqlDatabase:
             games_played = (
                 self.session.query(Game.hanged).filter(Game.game_id == game_id).count()
             )
-            # sum all win games
             games_wins = (
                 self.session.query(Game.hanged)
                 .filter(Game.game_id == game_id)
@@ -196,7 +192,7 @@ class SqlDatabase:
             words_list.append(word.word)
         return words_list
 
-    def get_words_category(self) -> list:
+    def get_words_category(self) -> set:
         """
         Get unique words category from base.
         """
@@ -216,7 +212,7 @@ class SqlDatabase:
             words_list.append(word.word)
         return words_list
 
-    def check_if_word_in_base(self, category: str, word: str) -> bool:
+    def check_if_word_in_base(self, category: str, word: str) -> Union[str, bool]:
         """
         Args:
             word (str): _description_

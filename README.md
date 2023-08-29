@@ -24,7 +24,7 @@ left leg, right leg, left arm, right arm, rope.
 
 ***
 # Terminal version
-## Start a game
+## Prepare to play
 
 First clone a repository, it will be better if you create you own python environment.
 
@@ -32,7 +32,21 @@ First clone a repository, it will be better if you create you own python environ
 git clone https://github.com/giedriuzz/Hangman_last_chance.git
 ```
 Import all libs from `requirements.txt` or from `Pipfile.lock`  
-And run `app.py` file where is in **`terminal`** folder.
+#### If you use `pipenv` go to cloned directory and run.  
+```
+pipenv install
+```
+Activate virtual environment
+```
+pipenv shell
+```
+#### If you use `pip` go to cloned directory and run.  
+```
+pip install -r requirements.txt
+```
+### Terminal version without database
+Terminal version dont need database, so you can run it without any other steps.
+Go to `/src` folder and run `app.py` file where is in.
 
 ```
 python app.py

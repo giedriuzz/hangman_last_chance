@@ -1,15 +1,12 @@
-version: '3.7'
+version: '3'
 services:
-  db:
-    image: nouchka/sqlite3
-    volumes:
-      - ./db:/home/giedrius/Documents/CA_last_work
-    command: sqlite3 /db/hangman.db
-  app:
+  python-app:
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: Dockerfile
     volumes:
-      - ./:/home/giedrius/Documents/app
-      - ./db/:/app/db/
-    command: python app_db.py
+
+      - ..:/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python app_db.py # Replace with your actual command to run the Python application
