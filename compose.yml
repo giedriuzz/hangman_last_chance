@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  python-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python app_db.py
+
+  db:
+    image: nouchka/sqlite3:latest
+    volumes:
+      - ../hangman.db:/db/hangman.db
