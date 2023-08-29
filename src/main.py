@@ -91,7 +91,6 @@ class Letter:
 
     def replace_guessed_letter(self) -> list:
         """Replace a letter if it is in the word"""
-
         for get_letter in enumerate(self.word):
             if get_letter[1] == self.letter.upper():
                 self.empty_word_list[get_letter[0]] = self.letter.upper()
