@@ -10,11 +10,9 @@ from database.models.words import Words
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
-from words.words import (
-    db_words_animals,  # noqa: F401
-    db_words_countries,  # noqa: F401
-    db_words_fruits,  # noqa: F401
-)
+from words.words import db_words_animals  # noqa: F401
+from words.words import db_words_countries  # noqa: F401
+from words.words import db_words_fruits  # noqa: F401
 
 
 class SqlDatabase:
@@ -233,9 +231,13 @@ if __name__ == "__main__":
 
     def load_words():
         """Function for load words in database"""
-        db = SqlDatabase("hangman")
+        db = SqlDatabase("hangman")  # pylint: disable=invalid-name
         db.create_database()
-        db_for_db = [db_words_animals, db_words_countries, db_words_fruits]
+        db_for_db = [
+            db_words_animals,
+            db_words_countries,
+            db_words_fruits,
+        ]  # add here new category
         for words_db in db_for_db:
             unique_words = [word.upper() for word in set(words_db[1])]
             check_words = db.check_if_word_in_base(
@@ -247,5 +249,3 @@ if __name__ == "__main__":
                 unique_words.remove(check_words)
             except ValueError:
                 continue
-
-    # load_words() # * uncomment this line if you want to load words in database

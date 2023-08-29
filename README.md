@@ -45,8 +45,9 @@ pipenv shell
 pip install -r requirements.txt
 ```
 ### Terminal version without database
-Terminal version dont need database, so you can run it without any other steps.
-Go to `/src` folder and run `app.py` file where is in.
+Terminal version dont need database, so you can run it without any other steps.  
+Go to `/src` folder and run `app.py` file where is in.  
+Game app don`t collect any data, so you can play without any worries.
 
 ```
 python app.py
@@ -76,9 +77,41 @@ words = {
         "New_word_2"
         ]
 ```
-
+### Terminal version with database
 
 ***
+
+If want to play with database, you must have installed it. Run  `db_direct.py` file where is in `/src` folder.
+
+If want add new `Categories` and `words` to database, you must edit `words.py` file where is in **`words`** folder. 
+ ```
+new_category = [
+    ["NEW_CATEGORY"],
+    ["NEW_WORD_1"],
+    ["NEW_WORD_2"]
+]
+
+```
+And need change imports in `db_direct.py` file, with new categories.
+```
+from words.words import (
+    db_words_animals, 
+    db_words_countries, 
+    db_words_fruits, 
+    new_category 
+)
+```
+
+And change line in the end of file.
+
+```
+db_for_db = [
+            db_words_animals,
+            db_words_countries,
+            db_words_fruits,
+            new_category
+        ]  # add here new category
+```
 
 <p align="left" width="100%">
 <img width="15%" src="src/pictures/docker.png">
