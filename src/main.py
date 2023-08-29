@@ -156,7 +156,7 @@ class Categories:
             "light_cyan",
         ]
         print(
-            f'{colored("           Categories               ","green", "on_light_grey", attrs=["bold"])}\n'  # noqa: E501
+            f'{colored("           Categories               ","black", "on_white", attrs=["bold"])}\n'  # noqa: E501
         )
         for category_key, category_value in categories_dict.items():
             random_color = choice(colors)

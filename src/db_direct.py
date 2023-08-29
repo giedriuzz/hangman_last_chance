@@ -10,9 +10,11 @@ from database.models.words import Words
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
-from words.words import db_words_animals  # noqa: F401
-from words.words import db_words_countries  # noqa: F401
-from words.words import db_words_fruits  # noqa: F401
+from words.words import (
+    db_words_animals,  # noqa: F401
+    db_words_countries,  # noqa: F401
+    db_words_fruits,  # noqa: F401
+)
 
 
 class SqlDatabase:
@@ -21,9 +23,9 @@ class SqlDatabase:
     def __init__(self, db_name: str) -> None:
         self.db_name = db_name
         self.engine = create_engine(
-            f"sqlite:////home/giedrius/Documents/CA_last_work/{self.db_name}.db"
+            f"sqlite:////home/giedrius/Documents/CA_last_work/hangman_last_chance/src/{self.db_name}.db"
         )
-        # self.engine = create_engine(f"sqlite:////db/{self.db_name}.db")
+
         session = sessionmaker(bind=self.engine)
         self.session = session()
 

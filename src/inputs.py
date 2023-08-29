@@ -20,9 +20,9 @@ def level() -> str:
     """Text for level"""
     text = (
         f'\n{colored("           Level               ","black", "on_white", attrs=["bold"])}'  # noqa: E501
-        f"\n\n{colored('        1. Easy', 'green', attrs=['bold'])}"
-        f"\n{colored('        2. Medium', 'yellow', attrs=['bold'])}"
-        f"\n{colored('        3. Hard', 'red', attrs=['bold'])}"
+        f"\n\n{colored('        1. Easy', 'white', attrs=['bold'])}"
+        f"\n{colored('        2. Medium', 'white', attrs=['bold'])}"
+        f"\n{colored('        3. Hard', 'white', attrs=['bold'])}"
         f"\nChoose: "
     )
     return text

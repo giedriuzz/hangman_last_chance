@@ -167,3 +167,4 @@ TODO.md
 logfile.log
 logging.log
 src/logging.log
+src/hangman.db
