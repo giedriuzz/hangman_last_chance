@@ -5,8 +5,9 @@ from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
 from typing import Union
 
-from db_direct import SqlDatabase
 from termcolor import colored
+
+from db_direct import SqlDatabase
 
 
 # pylint: disable=line-too-long consider-using-f-string
@@ -41,9 +42,7 @@ class DatabaseIntermediate(Abstract):
         games = self.base.user_games_by_user_id(user_id=user_id)
         return list(set(games))
 
-    def get_user_for_register(
-        self, name: str, surname: str, email: str, passwd: str
-    ) -> None:
+    def register_user(self, name: str, surname: str, email: str, passwd: str) -> None:
         """Get user credentials for register"""
         self.base.add_user_to_db(
             name=name,

@@ -6,6 +6,8 @@ import logging.config
 import sys
 from random import choice
 
+from termcolor import colored
+
 from database_main import DatabaseIntermediate
 from hangman import hangman
 from inputs import (
@@ -17,14 +19,13 @@ from inputs import (
     login_register_text,
 )
 from main import Categories, Letter, Words
+from main_reaf import registration
 from rules import rules
-from termcolor import colored
 from validation import (
     get_gaming_time,
     get_unique_id,
     input_only_en_letters,
     input_only_integer_value_not_bigger,
-    input_only_letters,
     return_dict_value_by_key,
 )
 
@@ -36,26 +37,28 @@ def game(db_name: str) -> None:
 
     db_base = DatabaseIntermediate(db_name=db_name)
 
-    logging.config.fileConfig(fname="logging.conf", disable_existing_loggers=False)
+    logging.config.fileConfig(
+        fname="logging.conf", disable_existing_loggers=False
+    )  # noqa:E501
     logger = logging.getLogger("sampleLogger")
 
     greeting = colored(
-        " === Welcome to Hangman game! === ", "black", "on_white", attrs=["bold"]
+        " === Welcome to Hangman game! === ",
+        "black",
+        "on_white",
+        attrs=["bold"],  # noqa:E501
     )
     print("\n", greeting)
 
     while True:
-        register = input_only_integer_value_not_bigger(3, login_register_text())
+        register = input_only_integer_value_not_bigger(
+            3, login_register_text()
+        )  # noqa:E501
         if register == 1:
             print(
                 f'\n{colored("             Register              ","black", "on_white", attrs=["bold"])}'  # noqa: E501
             )
-            name = input_only_letters(colored("\nName: ", "white", attrs=["bold"]))
-            surname = input_only_letters(colored("Surname: ", "white", attrs=["bold"]))
-            email, passwd = input_email(), input_passwd()
-            db_base.get_user_for_register(
-                name=name, surname=surname, email=email, passwd=passwd
-            )
+            registration()
             print(
                 colored("You are registered. Now can login.", "green", attrs=["bold"])
             )
