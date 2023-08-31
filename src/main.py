@@ -139,31 +139,12 @@ class Categories:
 
     def print_categories(self, categories_dict: dict) -> str:
         """Print categories"""
-        colors = [
-            "red",
-            "green",
-            "yellow",
-            "blue",
-            "magenta",
-            "cyan",
-            "white",
-            "light_red",
-            "light_green",
-            "light_yellow",
-            "light_blue",
-            "light_magenta",
-            "light_cyan",
-        ]
-        print(
-            f'{colored("           Categories               ","black", "on_white", attrs=["bold"])}\n'  # noqa: E501
-        )
         for category_key, category_value in categories_dict.items():
-            random_color = choice(colors)
             print(
-                f"        {colored(category_key, random_color, attrs=['bold'])}."
-                f"{colored(category_value, random_color, attrs=['bold'])}"
+                f"        {colored(category_key, 'white', attrs=['bold'])}."
+                f"{colored(category_value, 'white', attrs=['bold'])}"
             )
-        return colored("\nChoose a category: ", "blue")
+        return colored("\nChoose a category: ", "white")
 
 
 if __name__ == "__main__":

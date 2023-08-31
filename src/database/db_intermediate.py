@@ -3,11 +3,10 @@
 import time
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
-from typing import Union
+from typing import Optional, Union
 
+from database.crud import SqlDatabase
 from termcolor import colored
-
-from db_direct import SqlDatabase
 
 
 # pylint: disable=line-too-long consider-using-f-string
@@ -15,7 +14,7 @@ class Abstract(ABC):
     """Blueprint for database data manipulation"""
 
     @abstractmethod
-    def check_user_by_passwd_mail(self, user_passwd: str, user_email: str):
+    def read_user_by_passwd_mail(self, user_passwd: str, user_email: str):
         """Check if user exists in database"""
 
     def get_games_by_user_id(self, user_id: int) -> list:
@@ -28,11 +27,18 @@ class DatabaseIntermediate(Abstract):
     def __init__(self, db_name: str) -> None:
         self.base = SqlDatabase(db_name)
 
-    def check_user_by_passwd_mail(
-        self, user_passwd: str, user_email: str
+    def read_user_by_mail(self, user_email: str) -> Optional[bool]:
+        """Check if user exists in database"""
+        user = self.base.read_user_by_email(user_email=user_email)
+        if user:
+            return True
+        return False
+
+    def read_user_by_passwd_mail(
+        self, user_passwd: str = None, user_email: str = None
     ) -> Union[tuple, bool]:
         """Check if user exists in database"""
-        user = self.base.get_user_by_email(user_email=user_email)
+        user = self.base.read_user_by_email(user_email=user_email)
         if user and user_passwd == user.passwd:
             return user.name, user.id
         return False
@@ -42,8 +48,11 @@ class DatabaseIntermediate(Abstract):
         games = self.base.user_games_by_user_id(user_id=user_id)
         return list(set(games))
 
-    def register_user(self, name: str, surname: str, email: str, passwd: str) -> None:
+    def register_user(
+        self, name: str, surname: str, email: str, passwd: str
+    ) -> None:  # [x] naudojama
         """Get user credentials for register"""
+
         self.base.add_user_to_db(
             name=name,
             surname=surname,
@@ -129,4 +138,5 @@ class DatabaseIntermediate(Abstract):
 
 
 if __name__ == "__main__":
+    ...
     ...

@@ -1,60 +1,74 @@
 """Module for game logic"""
-from database_main import DatabaseIntermediate
+
+from database.db_intermediate import DatabaseIntermediate
 from inputs import input_email, input_passwd
+from main import Categories
 from termcolor import colored
-from validation import input_only_letters
+from validation import input_only_letters, return_dict_value_by_key
 
 db_base = DatabaseIntermediate("hangman")
 
 
-# grąžina listą su: name, surname, email, passwd
-def registration() -> None:
-    """Function for user registration"""
-    name = input_only_letters(colored("\nName: ", "white", attrs=["bold"]))
-    surname = input_only_letters(colored("Surname: ", "white", attrs=["bold"]))
-    email, passwd = input_email(), input_passwd()
-    db_base.register_user(
-        name=name, surname=surname, email=email, passwd=passwd
-    )  # noqa:501
+class Game:
+    """Class for game methods"""
 
+    def __init__(self, db_name) -> None:
+        self.db_intermediate = DatabaseIntermediate(db_name)
 
-# if register == 1:
-#     # grąžina listą su: name, surname, email, passwd
-#     print(
-#         f'\n{colored("             Register              ","black", "on_white", attrs=["bold"])}'  # noqa: E501
-#     )
-#     name = input_only_letters(colored("\nName: ", "white", attrs=["bold"]))  # noqa:E501
-#     surname = input_only_letters(
-#         colored("Surname: ", "white", attrs=["bold"])
-#     )  # noqa:E501
-#     email, passwd = input_email(), input_passwd()
-#     db_base.get_user_for_register(
-#         name=name, surname=surname, email=email, passwd=passwd
-#     )
-#     print(colored("You are registered. Now can login.", "green", attrs=["bold"]))
-#     continue
-# if register == 2:
-#     print(
-#         colored(
-#             "              Login                ",
-#             "black",
-#             "on_white",
-#             attrs=["bold"],
-#         ),
-#         "\n",
-#     )
-#     email, passwd = input_email(), input_passwd()
-#     user = db_base.check_user_by_passwd_mail(user_passwd=passwd, user_email=email)
-#     if user is False:
-#         print(colored("User not found!", "red", attrs=["bold"]))
-#         continue
-#     name = user[0]
-#     user_id = user[1]
-#     print(
-#         f'{colored(name, "yellow", attrs=["bold"])}'
-#         f'{colored(" you are logged in!", "yellow", attrs=["bold"])}'
-#     )
-# if register == 3:
-#     quest = 1
-# else:
-#     quest = 0
+    def registration(self) -> None:
+        """Function for user registration"""
+        print(
+            f'\n{colored("             Register              ","black", "on_white", attrs=["bold"])}'  # noqa: E501
+        )
+
+        name = input_only_letters(colored("\nName: ", "white", attrs=["bold"]))
+        surname = input_only_letters(colored("Surname: ", "white", attrs=["bold"]))
+        email, passwd = input_email(), input_passwd()
+        if self.db_intermediate.read_user_by_mail(user_email=email) is False:
+            self.db_intermediate.register_user(
+                name=name, surname=surname, email=email, passwd=passwd
+            )
+            print(
+                colored("You are registered. Now can login.", "green", attrs=["bold"])
+            )
+        else:
+            print(
+                f'{colored("User with this email ","red", attrs=["bold"])}{email}{colored(" already exists!", "red", attrs=["bold"])}'
+            )
+
+    def login(self) -> None:
+        """Function for user login"""
+        print(
+            colored(
+                "              Login                ",
+                "black",
+                "on_white",
+                attrs=["bold"],
+            ),
+            "\n",
+        )
+        email, passwd = input_email(), input_passwd()
+        user = self.db_intermediate.read_user_by_passwd_mail(
+            user_passwd=passwd, user_email=email
+        )
+        if user is False:
+            print(colored("User not found!", "red", attrs=["bold"]))
+            return False
+        name = user[0]
+        user_id = user[1]
+        print(
+            f'{colored(name, "yellow", attrs=["bold"])}'
+            f'{colored(" you are logged in!", "yellow", attrs=["bold"])}'
+        )
+        return name, user_id
+
+    def category(self):
+        """Method for get category"""
+        categories = Categories(self.db_intermediate.get_category())
+        categories_dict = categories.get_categories_enumerated()
+        category = return_dict_value_by_key(
+            len(categories_dict),
+            categories.print_categories(categories_dict),
+            categories_dict,
+        )
+        return category

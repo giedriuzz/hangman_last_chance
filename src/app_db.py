@@ -6,27 +6,18 @@ import logging.config
 import sys
 from random import choice
 
-from termcolor import colored
-
-from database_main import DatabaseIntermediate
+from database.db_intermediate import DatabaseIntermediate
 from hangman import hangman
-from inputs import (
-    game_menu,
-    game_menu_quest,
-    input_email,
-    input_passwd,
-    level,
-    login_register_text,
-)
-from main import Categories, Letter, Words
-from main_reaf import registration
+from inputs import game_menu, game_menu_quest, level, login_register_text
+from main import Letter, Words
+from main_reaf import Game
 from rules import rules
+from termcolor import colored
 from validation import (
     get_gaming_time,
     get_unique_id,
     input_only_en_letters,
     input_only_integer_value_not_bigger,
-    return_dict_value_by_key,
 )
 
 # pylint: disable=line-too-long
@@ -36,6 +27,7 @@ def game(db_name: str) -> None:
     """Class for all game data"""
 
     db_base = DatabaseIntermediate(db_name=db_name)
+    game = Game(db_name=db_name)
 
     logging.config.fileConfig(
         fname="logging.conf", disable_existing_loggers=False
@@ -51,47 +43,20 @@ def game(db_name: str) -> None:
     print("\n", greeting)
 
     while True:
-        register = input_only_integer_value_not_bigger(
-            3, login_register_text()
-        )  # noqa:E501
+        register = input_only_integer_value_not_bigger(3, login_register_text())
+        # Register area
         if register == 1:
-            print(
-                f'\n{colored("             Register              ","black", "on_white", attrs=["bold"])}'  # noqa: E501
-            )
-            registration()
-            print(
-                colored("You are registered. Now can login.", "green", attrs=["bold"])
-            )
+            game.registration()
             continue
-
+        # Login area
         if register == 2:
-            print(
-                colored(
-                    "              Login                ",
-                    "black",
-                    "on_white",
-                    attrs=["bold"],
-                ),
-                "\n",
-            )
-            email, passwd = input_email(), input_passwd()
-            user = db_base.check_user_by_passwd_mail(
-                user_passwd=passwd, user_email=email
-            )
-            if user is False:
-                print(colored("User not found!", "red", attrs=["bold"]))
-                continue
-            name = user[0]
-            user_id = user[1]
-            print(
-                f'{colored(name, "yellow", attrs=["bold"])}'
-                f'{colored(" you are logged in!", "yellow", attrs=["bold"])}'
-            )
+            game.login()
+            continue
         if register == 3:
             quest = 1
         else:
             quest = 0
-
+        # Game menu
         while True:
             if quest == 1:
                 choosing = int(
@@ -102,6 +67,7 @@ def game(db_name: str) -> None:
             print()
             # * Game area
             if choosing == 1:
+                # ! naikinti jei galima
                 _say_you_hanged = (
                     f'\n{colored("HANGED :( ", "red", "on_red", attrs=["bold"])}'
                 )
@@ -109,13 +75,7 @@ def game(db_name: str) -> None:
                 _say_guessed_word = colored(
                     " == You guessed the word !!! == ", "yellow"
                 )
-                categories = Categories(db_base.get_category())
-                categories_dict = categories.get_categories_enumerated()
-                category = return_dict_value_by_key(
-                    len(categories_dict),
-                    categories.print_categories(categories_dict),
-                    categories_dict,
-                )
+                category = game.category()
                 difficulty = input_only_integer_value_not_bigger(3, level())
                 words_dict = db_base.get_words_by_category_difficulty(
                     category=category, difficulty=difficulty
