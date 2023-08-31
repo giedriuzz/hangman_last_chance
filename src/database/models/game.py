@@ -10,7 +10,7 @@ from sqlalchemy.orm import relationship
 class Game(Base):
     """Class for game table in database"""
 
-    __tablename__ = "game"
+    __tablename__ = "game"  # rename to round
     id = Column(Integer, primary_key=True)
     game_id = Column("game", String)
     gamed_time = Column("game_time", DateTime, default=datetime.datetime.utcnow)

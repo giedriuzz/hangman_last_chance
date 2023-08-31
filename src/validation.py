@@ -40,7 +40,7 @@ def input_only_en_letters(input_text: str) -> str:
             print("Input accepts only English alphabetic letters!")
             continue
         print("Input accepts only English alphabetic letters!")
-        continue
+        continue  # check if need
 
 
 def input_only_email(email: str) -> str:

@@ -124,7 +124,7 @@ class Letter:
         return len(Letter.NOT_MATCHED_LETTERS) + len(Letter.MATCHED_LETTERS)
 
 
-class Categories:
+class Categories:  # ! Vienaskaita
     """Class for work with categories"""
 
     def __init__(self, input_list: list):
