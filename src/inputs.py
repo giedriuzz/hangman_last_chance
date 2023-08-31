@@ -1,6 +1,7 @@
 """Module for store text where is used in program"""
 import maskpass
 from termcolor import colored
+
 from validation import input_only_email
 
 
@@ -19,11 +20,11 @@ def login_register_text() -> str:
 def level() -> str:
     """Text for level"""
     text = (
-        f'\n{colored("           Level               ","black", "on_white", attrs=["bold"])}'  # noqa: E501
+        f'\n{colored("              Level                 ","black", "on_white", attrs=["bold"])}'  # noqa: E501
         f"\n\n{colored('        1. Easy', 'white', attrs=['bold'])}"
         f"\n{colored('        2. Medium', 'white', attrs=['bold'])}"
         f"\n{colored('        3. Hard', 'white', attrs=['bold'])}"
-        f"\nChoose: "
+        f"\n\nChoose level: "
     )
     return text
 

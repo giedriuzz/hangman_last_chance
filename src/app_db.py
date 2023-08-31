@@ -44,19 +44,15 @@ def game(db_name: str) -> None:
 
     while True:
         register = input_only_integer_value_not_bigger(3, login_register_text())
-        # Register area
         if register == 1:
             game.registration()
             continue
-        # Login area
         if register == 2:
             game.login()
-            continue
         if register == 3:
             quest = 1
         else:
             quest = 0
-        # Game menu
         while True:
             if quest == 1:
                 choosing = int(
@@ -78,32 +74,30 @@ def game(db_name: str) -> None:
                 category = game.category()
                 difficulty = input_only_integer_value_not_bigger(3, level())
                 words_dict = db_base.get_words_by_category_difficulty(
-                    category=category, difficulty=difficulty
+                    category=category, difficulty=
                 )
                 length = 0
                 game_id = get_unique_id()
                 while length < 10:
                     length += 1
                     start_time = datetime.datetime.now()
+                    
+                    logging.debug("Round: %s/10", length)  # * Logging
+                    logger.debug("Category: %s", category)  # * Logging
+                    
                     guessing_word = choice(words_dict)
                     guessed_word_in_list = list(guessing_word)
                     word_declaration = Words(word=guessing_word)
-
-                    logging.debug("Round: %s/10", length)  # * Logging
-                    logger.debug("Category: %s", category)  # * Logging
+                    
                     logger.debug("Guessing word: %s", guessing_word)  # * Logging
 
                     letter = Letter(word_declaration, "")
                     game.clear_reload_list(letter_class=letter)
-
-                    print(f'\n{colored("Round: ", "red")} {length}/10')
-                    print(_say_choose_category, category)
-                    print(
-                        colored("Letters left: ", "green"), *letter.LETTERS_LIST_TUPLE
-                    )
-                    print(
-                        colored("Guessing word: ", "blue", attrs=["bold"]),
-                        *["_" for _ in range(len(guessing_word))],
+                    game.starting_game(
+                        length=length,
+                        category=category,
+                        letter_class=letter,
+                        guessing_word=guessing_word,
                     )
                     while True:
                         string_only_en_letters = input_only_en_letters(

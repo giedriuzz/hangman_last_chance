@@ -3,15 +3,16 @@
 from datetime import datetime
 from typing import List, Union
 
-from database.db.db_base import Base
-from database.models.game import Game
-from database.models.user import User
-from database.models.words import Words
 from sqlalchemy import create_engine
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
 from words.words import words_list
+
+from database.db.db_base import Base
+from database.models.game import Game
+from database.models.user import User
+from database.models.words import Words
 
 
 class SqlDatabase:
@@ -253,4 +254,4 @@ class SqlDatabase:
 if __name__ == "__main__":
     db = SqlDatabase("hangman")
     db.load_data(words_list)
-    print(db.read_user_by_email("giedrius@g.lt").email)
+    # print(db.read_user_by_email("giedrius@g.lt").email)

@@ -1,7 +1,6 @@
 """Module for work with guessing word from database"""
 
 from dataclasses import dataclass
-from random import choice
 from typing import Dict, List, Union
 
 from termcolor import colored
@@ -139,6 +138,15 @@ class Categories:
 
     def print_categories(self, categories_dict: dict) -> str:
         """Print categories"""
+        print(
+            colored(
+                "            Category               ",
+                "black",
+                "on_white",
+                attrs=["bold"],
+            ),
+        )
+        print()
         for category_key, category_value in categories_dict.items():
             print(
                 f"        {colored(category_key, 'white', attrs=['bold'])}."

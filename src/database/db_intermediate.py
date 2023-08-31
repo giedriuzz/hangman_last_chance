@@ -3,10 +3,11 @@
 import time
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
-from typing import Optional, Union
+from typing import Literal, Optional, Union
+
+from termcolor import colored
 
 from database.crud import SqlDatabase
-from termcolor import colored
 
 
 # pylint: disable=line-too-long consider-using-f-string
@@ -35,8 +36,8 @@ class DatabaseIntermediate(Abstract):
         return False
 
     def read_user_by_passwd_mail(
-        self, user_passwd: str = None, user_email: str = None
-    ) -> Union[tuple, bool]:
+        self, user_passwd: str = "", user_email: str = ""
+    ) -> Union[tuple | Literal[True], bool]:
         """Check if user exists in database"""
         user = self.base.read_user_by_email(user_email=user_email)
         if user and user_passwd == user.passwd:
@@ -70,7 +71,7 @@ class DatabaseIntermediate(Abstract):
         if difficulty == 3:
             difficulty = (9, 12)
         words = self.base.get_words_by_category_and_difficulty(
-            set_category=category, difficulty=(difficulty[0], difficulty[1])
+            set_category=category.upper(), difficulty=(difficulty[0], difficulty[1])
         )
         return words
 
@@ -138,5 +139,4 @@ class DatabaseIntermediate(Abstract):
 
 
 if __name__ == "__main__":
-    ...
     ...
