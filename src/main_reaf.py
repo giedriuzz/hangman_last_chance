@@ -2,7 +2,7 @@
 
 from database.db_intermediate import DatabaseIntermediate
 from inputs import input_email, input_passwd
-from main import Categories
+from main import Categories, Letter
 from termcolor import colored
 from validation import input_only_letters, return_dict_value_by_key
 
@@ -72,3 +72,11 @@ class Game:
             categories_dict,
         )
         return category
+
+    def clear_reload_list(self, letter_class: Letter) -> None:
+        """Clear and reload lists in class Letter"""
+        letter_class.LETTERS_LIST.clear()
+        letter_class.reload_letters_list()
+        letter_class.MATCHED_LETTERS.clear()
+        letter_class.NOT_MATCHED_LETTERS.clear()
+        letter_class.empty_word_list.clear()

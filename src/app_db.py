@@ -85,20 +85,16 @@ def game(db_name: str) -> None:
                 while length < 10:
                     length += 1
                     start_time = datetime.datetime.now()
-
-                    logging.debug("Round: %s/10", length)  # * Logging
-                    logger.debug("Category: %s", category)  # * Logging
                     guessing_word = choice(words_dict)
-                    logger.debug("Guessing word: %s", guessing_word)  # * Logging
                     guessed_word_in_list = list(guessing_word)
                     word_declaration = Words(word=guessing_word)
 
+                    logging.debug("Round: %s/10", length)  # * Logging
+                    logger.debug("Category: %s", category)  # * Logging
+                    logger.debug("Guessing word: %s", guessing_word)  # * Logging
+
                     letter = Letter(word_declaration, "")
-                    letter.LETTERS_LIST.clear()
-                    letter.reload_letters_list()
-                    letter.MATCHED_LETTERS.clear()
-                    letter.NOT_MATCHED_LETTERS.clear()
-                    letter.empty_word_list.clear()
+                    game.clear_reload_list(letter_class=letter)
 
                     print(f'\n{colored("Round: ", "red")} {length}/10')
                     print(_say_choose_category, category)
